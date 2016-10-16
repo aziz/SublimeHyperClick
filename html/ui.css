@@ -1,0 +1,49 @@
+html {
+  --selection-color: color(var(--background) blend(var(--bluish) 30%));
+  --header-bg: color(var(--foreground) blend(var(--background) 70%));
+  --section-bg: color(var(--background) blend(var(--foreground) 70%));
+  --panel-header-bg: color(var(--background) blend(var(--foreground) 70%));
+  --panel-body-bg: color(var(--background) blend(var(--foreground) 30%));
+  --btn-bg: color(var(--background) blend(var(--foreground) 50%));
+  --btn-redish: color(var(--background) blend(var(--redish) 30%));
+  --btn-orangish: color(var(--background) blend(var(--orangish) 30%));
+  --btn-bluish: color(var(--background) blend(var(--bluish) 30%));
+  --btn-greenish: color(var(--background) blend(var(--greenish) 30%));
+  --content-padding: 0.5rem 1rem;
+  --section-padding: 0.25rem 1rem;
+}
+
+#hyperClick {
+  background-color: var(--background);
+  color: var(--foreground);
+  margin: 0;
+  padding: 0;
+}
+
+#hyperClick a {
+  text-decoration: none;
+  color: var(--background);
+}
+
+.label {
+  border-radius: 3px;
+  color: var(--background);
+  background-color: var(--foreground);
+  padding: 0 5px;
+}
+
+.label-success {
+  background-color: var(--greenish);
+}
+
+.label-error {
+  background-color: var(--redish);
+}
+
+.label-warning {
+  background-color: var(--orangish);
+}
+
+.label-info {
+  background-color: var(--bluish);
+}

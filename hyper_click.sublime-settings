@@ -1,0 +1,26 @@
+{
+  // list of sublime-syntaxes that we're enabling this plugin for.
+  "supported_syntaxes": {
+    "js": [
+      "ecmascript.sublime-syntax",
+      "JavaScript.sublime-syntax",
+      "JavaScript (Babel).sublime-syntax"
+    ]
+  },
+  "import_line_regex": {
+    "js": [
+      "^import\\s+.+\\s+from\\s+['\"](.+)['\"];?$",
+      ".+require\\(['\"](.+)['\"]\\).+"
+    ]
+  },
+  "valid_extensions": {
+    "js": ["js", "jsx"]
+  },
+  "default_filenames": {
+    "js": ["index"]
+  },
+  "vendor_dirs": {
+    "js": ["node_modules"]
+  },
+  "debug": false
+}
