@@ -52,7 +52,12 @@ class HyperClickAnnotator(sublime_plugin.ViewEventListener):
 
     def on_selection_modified_async(self):
         v = self.view
+
         if v.is_dirty():
+            v.erase_phantoms('hyper_click')
+            return
+
+        if not (len(v.sel()) == 1 and v.sel()[0].empty()):
             v.erase_phantoms('hyper_click')
             return
 
