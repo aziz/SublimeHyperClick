@@ -1,0 +1,8 @@
+[
+    { "caption": "-" },
+    {
+        "caption": "➜ Jump to file",
+        "command": "hyper_click_jump",
+    },
+    { "caption": "-"}
+]

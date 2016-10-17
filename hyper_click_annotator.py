@@ -2,9 +2,8 @@
 import sublime_plugin
 import sublime
 import re
-import json
-from os import path
 from itertools import chain
+from . import hyper_click as HC
 
 
 class HyperClickAnnotator(sublime_plugin.ViewEventListener):
@@ -28,7 +27,7 @@ class HyperClickAnnotator(sublime_plugin.ViewEventListener):
         self.window = view.window()
         self.roots = view.window().folders()
         self.syntax = self.view.settings().get('syntax')
-        self.lang = self._get_lang(self.syntax)
+        self.lang = self.get_lang(self.syntax)
 
     def is_valid_line(self, line_content):
         import_lines = self.settings.get('import_line_regex', {})
@@ -39,7 +38,7 @@ class HyperClickAnnotator(sublime_plugin.ViewEventListener):
                 return matched
         return False
 
-    def _get_lang(self, syntax):
+    def get_lang(self, syntax):
         supported_syntaxes = self.settings.get('supported_syntaxes')
         for (lang, syntax_names) in supported_syntaxes.items():
             for syn in syntax_names:
@@ -48,7 +47,7 @@ class HyperClickAnnotator(sublime_plugin.ViewEventListener):
         return ''
 
     def on_navigate(self, url):
-        self.window.open_file(url, sublime.ENCODED_POSITION)
+        self.window.open_file(url)
 
     def on_selection_modified_async(self):
         v = self.view
@@ -57,11 +56,11 @@ class HyperClickAnnotator(sublime_plugin.ViewEventListener):
             v.erase_phantoms('hyper_click')
             return
 
-        if not (len(v.sel()) == 1 and v.sel()[0].empty()):
+        if len(v.sel()) != 1:
             v.erase_phantoms('hyper_click')
             return
 
-        cursor = v.sel()[0]
+        cursor = v.sel()[0].a
         line_range = v.line(cursor)
 
         if v.line(line_range.b) == self.current_line:
@@ -72,7 +71,7 @@ class HyperClickAnnotator(sublime_plugin.ViewEventListener):
 
         if matched:
             destination_str = matched.group(1)
-            file_path = HyperClickPathResolver(
+            file_path = HC.HyperClickPathResolver(
                 destination_str, v.file_name(),
                 self.roots, self.lang, self.settings
             )
@@ -94,56 +93,8 @@ class HyperClickAnnotator(sublime_plugin.ViewEventListener):
         else:
             v.erase_phantoms('hyper_click')
 
+    def on_activated_async(self):
+        self.on_selection_modified_async()
 
-class HyperClickPathResolver:
-    def __init__(self, str_path, current_file, roots, lang, settings):
-        current_dir = path.dirname(path.realpath(current_file))
-        if lang == 'js':
-            self.resolver = JsPathResolver(str_path, current_dir, roots, lang, settings)
-
-    def resolve(self):
-        return self.resolver.resolve()
-
-
-class JsPathResolver:
-    def __init__(self, str_path, current_dir, roots, lang, settings):
-        self.str_path = str_path
-        self.current_dir = current_dir
-        self.lang = lang
-        self.settings = settings
-        self.roots = roots
-        self.valid_extensions = settings.get('valid_extensions', {})[lang]
-        self.default_filenames = settings.get('default_filenames', {})[lang]
-        self.vendor_dirs = settings.get('vendor_dirs', {})[lang]
-
-    def resolve(self):
-        if self.str_path.startswith('.'):
-            return self.resolve_relative_path()
-        else:
-            return self.resolve_package_path()
-
-    def resolve_relative_path(self):
-        combined = path.realpath(path.join(self.current_dir, self.str_path))
-        # matching ../index to /index.js
-        for ext in self.valid_extensions:
-            file_path = combined + '.' + ext
-            if path.isfile(file_path):
-                return file_path
-
-        # matching ./demo to /demo/index.js
-        if path.isdir(combined):
-            for default_name in self.default_filenames:
-                for ext in self.valid_extensions:
-                    file_path = path.join(combined, default_name + '.' + ext)
-                    if path.isfile(file_path):
-                        return file_path
-
-    def resolve_package_path(self):
-        for root in self.roots:
-            for vendor_dir in self.vendor_dirs:
-                combined = path.realpath(path.join(root, vendor_dir, self.str_path))
-                package_json_path = path.join(combined, 'package.json')
-                if path.isdir(combined) and path.isfile(package_json_path):
-                    with open(package_json_path) as data_file:
-                        data = json.load(data_file)
-                    return path.realpath(path.join(combined, data['main']))
+    def on_deactivated_async(self):
+        self.view.erase_phantoms('hyper_click')
