@@ -1,5 +1,4 @@
 {
-  // list of sublime-syntaxes that we're enabling this plugin for.
   "supported_syntaxes": {
     "js": [
       "ecmascript.sublime-syntax",
@@ -22,6 +21,5 @@
   },
   "vendor_dirs": {
     "js": ["node_modules"]
-  },
-  "debug": false
+  }
 }
