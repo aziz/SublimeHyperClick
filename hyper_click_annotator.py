@@ -80,8 +80,8 @@ class HyperClickAnnotator(sublime_plugin.ViewEventListener):
                 self.current_line = v.line(line_range.b)
                 v.erase_phantoms('hyper_click')
                 content = """
-                    <span class="label label-success"><a href="{}">➜</a></span>
-                """.format(file_path.resolve())
+                    <span class="label label-success"><a href="{link}">{content}</a></span>
+                """.format(link=file_path.resolve(), content=self.settings.get('annotation_button_text', '➜'))
                 v.add_phantom(
                     'hyper_click',
                     region,
