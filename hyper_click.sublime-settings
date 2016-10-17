@@ -4,6 +4,10 @@
       "ecmascript.sublime-syntax",
       "JavaScript.sublime-syntax",
       "JavaScript (Babel).sublime-syntax"
+    ],
+    "sass": [
+      "SCSS.tmLanguage",
+      "Sass.tmLanguage"
     ]
   },
   "import_line_regex": {
@@ -11,10 +15,14 @@
       "^import\\s+.+\\s+from\\s+['\"](.+)['\"];?$",
       "^import\\s+['\"](.+)['\"];?$",
       ".+require\\(['\"](.+)['\"]\\).+"
+    ],
+    "sass": [
+      "^@import\\s+['\"](.+)['\"];?$"
     ]
   },
   "valid_extensions": {
-    "js": ["js", "jsx"]
+    "js": ["js", "jsx"],
+    "sass": ["scss", "sass"]
   },
   "default_filenames": {
     "js": ["index"]

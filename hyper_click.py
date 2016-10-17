@@ -8,6 +8,8 @@ class HyperClickPathResolver:
         current_dir = path.dirname(path.realpath(current_file))
         if lang == 'js':
             self.resolver = JsPathResolver(str_path, current_dir, roots, lang, settings)
+        if lang == 'sass':
+            self.resolver = SassPathResolver(str_path, current_dir, roots, lang, settings)
 
     def resolve(self):
         return self.resolver.resolve()
@@ -45,6 +47,7 @@ class JsPathResolver:
                     file_path = path.join(combined, default_name + '.' + ext)
                     if path.isfile(file_path):
                         return file_path
+        return ''
 
     def resolve_package_path(self):
         for root in self.roots:
@@ -55,3 +58,32 @@ class JsPathResolver:
                     with open(package_json_path) as data_file:
                         data = json.load(data_file)
                     return path.realpath(path.join(combined, data['main']))
+        return ''
+
+
+class SassPathResolver:
+    def __init__(self, str_path, current_dir, roots, lang, settings):
+        self.str_path = str_path
+        self.current_dir = current_dir
+        self.lang = lang
+        self.settings = settings
+        self.roots = roots
+        self.valid_extensions = settings.get('valid_extensions', {})[lang]
+
+    def resolve(self):
+        combined = path.realpath(path.join(self.current_dir, self.str_path))
+        # matching ../variables/palette to ../variables/palette.scss
+        for ext in self.valid_extensions:
+            file_path = combined + '.' + ext
+            if path.isfile(file_path):
+                return file_path
+
+        # matching ../variables/palette to ../variables/_palette.scss
+        pathname, filename = path.split(self.str_path)
+        combined = path.realpath(path.join(self.current_dir, pathname, '_' + filename))
+        for ext in self.valid_extensions:
+            file_path = combined + '.' + ext
+            if path.isfile(file_path):
+                return file_path
+
+        return ''
