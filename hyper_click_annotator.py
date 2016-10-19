@@ -128,10 +128,7 @@ if ST3118:
                 cursor = v.sel()[0].a
                 line_range = v.line(cursor)
                 line_content = v.substr(line_range).strip()
-                if self.is_valid_line(line_content):
-                    return True
-                else:
-                    return False
+                return bool(self.is_valid_line(line_content))
             return None
 
         def on_hover(self, point, hover_zone):
