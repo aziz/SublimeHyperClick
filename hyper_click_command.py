@@ -37,7 +37,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
 
     def is_valid_line(self, line_content):
         import_lines = self.settings.get('import_line_regex', {})
-        for regex_str in import_lines[self.lang]:
+        for regex_str in import_lines.get(self.lang, []):
             pattern = re.compile(regex_str)
             matched = pattern.match(line_content)
             if matched:
@@ -67,4 +67,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         return False
 
     def is_visible(self):
-        return self.is_enabled()
+        if len(self.lang) == 0:
+            return False
+        else:
+            return self.is_enabled()
