@@ -12,7 +12,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         self.view = view
         self.settings = sublime.load_settings('hyper_click.sublime-settings')
         self.window = view.window()
-        self.roots = view.window().folders()
+        self.roots = self.window and self.window.folders()
         self.syntax = self.view.settings().get('syntax')
         self.lang = self.get_lang(self.syntax)
 

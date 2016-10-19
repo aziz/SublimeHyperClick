@@ -1,0 +1,9 @@
+[
+  {
+      "keys": ["f12"],
+      "command": "hyper_click_jump",
+      "context": [
+        { "key": "hyper_click_jump_line", "operand": true }
+      ]
+  }
+]

@@ -103,3 +103,16 @@ if ST3118:
 
         def on_deactivated_async(self):
             self.view.erase_phantoms('hyper_click')
+
+        def on_query_context(self, key, operator, operand, match_all):
+            if key == 'hyper_click_jump_line':
+                v = self.view
+                cursor = v.sel()[0].a
+                line_range = v.line(cursor)
+                line_content = v.substr(line_range).strip()
+                if self.is_valid_line(line_content):
+                    return True
+                else:
+                    return False
+
+            return None
