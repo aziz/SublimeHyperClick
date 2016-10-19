@@ -54,19 +54,9 @@ if ST3118:
         def on_navigate(self, url):
             self.window.open_file(url)
 
-        def on_selection_modified_async(self):
+        def annotate(self, point):
             v = self.view
-
-            if v.is_dirty():
-                v.erase_phantoms('hyper_click')
-                return
-
-            if len(v.sel()) != 1:
-                v.erase_phantoms('hyper_click')
-                return
-
-            cursor = v.sel()[0].a
-            line_range = v.line(cursor)
+            line_range = v.line(point)
 
             if v.line(line_range.b) == self.current_line:
                 return
@@ -87,7 +77,10 @@ if ST3118:
                 if len(resolved_path) > 0:
                     content = """
                         <span class="label label-success"><a href="{link}">{content}</a></span>
-                    """.format(link=resolved_path, content=self.settings.get('annotation_found_text', '➜'))
+                    """.format(
+                        link=resolved_path,
+                        content=self.settings.get('annotation_found_text', '➜')
+                    )
                     v.add_phantom(
                         'hyper_click',
                         region,
@@ -107,6 +100,22 @@ if ST3118:
             else:
                 v.erase_phantoms('hyper_click')
 
+        # ---------------------------------------
+
+        def on_selection_modified_async(self):
+            v = self.view
+
+            if v.is_dirty():
+                v.erase_phantoms('hyper_click')
+                return
+
+            if len(v.sel()) != 1:
+                v.erase_phantoms('hyper_click')
+                return
+
+            point = v.sel()[0].a
+            self.annotate(point)
+
         def on_activated_async(self):
             self.on_selection_modified_async()
 
@@ -123,5 +132,7 @@ if ST3118:
                     return True
                 else:
                     return False
-
             return None
+
+        def on_hover(self, point, hover_zone):
+            self.annotate(point)
