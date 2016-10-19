@@ -55,7 +55,7 @@ class JsPathResolver:
                 combined = path.realpath(path.join(root, vendor_dir, self.str_path))
                 package_json_path = path.join(combined, 'package.json')
                 if path.isdir(combined) and path.isfile(package_json_path):
-                    with open(package_json_path) as data_file:
+                    with open(package_json_path, 'r', encoding='utf-8') as data_file:
                         data = json.load(data_file)
                     return path.realpath(path.join(combined, data['main']))
         return ''

@@ -30,6 +30,7 @@
   "vendor_dirs": {
     "js": ["node_modules"]
   },
-  "annotation_button_text": "➜",
+  "annotation_found_text": "➜",
+  "annotation_not_found_text": "✘",
   "annotations_enabled": true
 }

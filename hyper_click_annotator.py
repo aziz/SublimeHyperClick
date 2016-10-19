@@ -80,13 +80,13 @@ if ST3118:
                     destination_str, v.file_name(),
                     self.roots, self.lang, self.settings
                 )
+                region = sublime.Region(line_range.b, line_range.b)
+                self.current_line = v.line(line_range.b)
+                v.erase_phantoms('hyper_click')
                 if len(file_path.resolve()) > 0:
-                    region = sublime.Region(line_range.b, line_range.b)
-                    self.current_line = v.line(line_range.b)
-                    v.erase_phantoms('hyper_click')
                     content = """
                         <span class="label label-success"><a href="{link}">{content}</a></span>
-                    """.format(link=file_path.resolve(), content=self.settings.get('annotation_button_text', '➜'))
+                    """.format(link=file_path.resolve(), content=self.settings.get('annotation_found_text', '➜'))
                     v.add_phantom(
                         'hyper_click',
                         region,
@@ -94,7 +94,15 @@ if ST3118:
                         sublime.LAYOUT_INLINE, self.on_navigate
                     )
                 else:
-                    v.erase_phantoms('hyper_click')
+                    content = """
+                        <span class="label label-error">{content}</span>
+                    """.format(content=self.settings.get('annotation_not_found_text', '✘'))
+                    v.add_phantom(
+                        'hyper_click',
+                        region,
+                        self.html.format(css=self.css, content=content),
+                        sublime.LAYOUT_INLINE, self.on_navigate
+                    )
             else:
                 v.erase_phantoms('hyper_click')
 
