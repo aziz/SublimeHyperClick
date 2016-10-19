@@ -3,7 +3,7 @@ import sublime_plugin
 import sublime
 import re
 from itertools import chain
-from . import hyper_click as HC
+from .hyper_click.hyper_click import HyperClickPathResolver
 
 ST3118 = int(sublime.version()) >= 3118
 
@@ -76,17 +76,18 @@ if ST3118:
 
             if matched:
                 destination_str = matched.group(1)
-                file_path = HC.HyperClickPathResolver(
+                file_path = HyperClickPathResolver(
                     destination_str, v.file_name(),
                     self.roots, self.lang, self.settings
                 )
                 region = sublime.Region(line_range.b, line_range.b)
                 self.current_line = v.line(line_range.b)
                 v.erase_phantoms('hyper_click')
-                if len(file_path.resolve()) > 0:
+                resolved_path = file_path.resolve()
+                if len(resolved_path) > 0:
                     content = """
                         <span class="label label-success"><a href="{link}">{content}</a></span>
-                    """.format(link=file_path.resolve(), content=self.settings.get('annotation_found_text', '➜'))
+                    """.format(link=resolved_path, content=self.settings.get('annotation_found_text', '➜'))
                     v.add_phantom(
                         'hyper_click',
                         region,

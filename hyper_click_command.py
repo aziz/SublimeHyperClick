@@ -2,7 +2,7 @@
 import sublime_plugin
 import sublime
 import re
-from . import hyper_click as HC
+from .hyper_click.hyper_click import HyperClickPathResolver
 
 
 class HyperClickJumpCommand(sublime_plugin.TextCommand):
@@ -28,7 +28,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         matched = self.is_valid_line(line_content)
         if matched:
             destination_str = matched.group(1)
-            file_path = HC.HyperClickPathResolver(
+            file_path = HyperClickPathResolver(
                 destination_str, v.file_name(),
                 self.roots, self.lang, self.settings
             )
