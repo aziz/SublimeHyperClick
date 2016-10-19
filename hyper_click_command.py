@@ -2,7 +2,7 @@
 import sublime_plugin
 import sublime
 import re
-from .hyper_click.hyper_click import HyperClickPathResolver
+from .hyper_click.path_resolver import HyperClickPathResolver
 
 
 class HyperClickJumpCommand(sublime_plugin.TextCommand):

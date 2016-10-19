@@ -3,7 +3,7 @@ import sublime_plugin
 import sublime
 import re
 from itertools import chain
-from .hyper_click.hyper_click import HyperClickPathResolver
+from .hyper_click.path_resolver import HyperClickPathResolver
 
 ST3118 = int(sublime.version()) >= 3118
 
