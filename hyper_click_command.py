@@ -3,6 +3,7 @@ import sublime_plugin
 import sublime
 import re
 from .hyper_click.path_resolver import HyperClickPathResolver
+import webbrowser
 
 
 class HyperClickJumpCommand(sublime_plugin.TextCommand):
@@ -32,8 +33,12 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
                 destination_str, v.file_name(),
                 self.roots, self.lang, self.settings
             )
-            if len(file_path.resolve()) > 0:
-                self.window.open_file(file_path.resolve())
+            resolved_path = file_path.resolve()
+            if len(resolved_path) > 0:
+                if resolved_path.startswith('http://') or resolved_path.startswith('https://'):
+                    webbrowser.open_new_tab(resolved_path)
+                else:
+                    self.window.open_file(resolved_path)
 
     def is_valid_line(self, line_content):
         import_lines = self.settings.get('import_line_regex', {})

@@ -2,6 +2,7 @@
 import sublime_plugin
 import sublime
 import re
+import webbrowser
 from itertools import chain
 from .hyper_click.path_resolver import HyperClickPathResolver
 
@@ -52,7 +53,10 @@ if ST3118:
             return ''
 
         def on_navigate(self, url):
-            self.window.open_file(url)
+            if url.startswith('http://') or url.startswith('https://'):
+                webbrowser.open_new_tab(url)
+            else:
+                self.window.open_file(url)
 
         def annotate(self, point):
             v = self.view
@@ -74,6 +78,7 @@ if ST3118:
                 self.current_line = v.line(line_range.b)
                 v.erase_phantoms('hyper_click')
                 resolved_path = file_path.resolve()
+                print('resolved to => ', resolved_path)
                 if len(resolved_path) > 0:
                     content = """
                         <span class="label label-success"><a href="{link}">{content}</a></span>
