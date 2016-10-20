@@ -33,6 +33,10 @@ class JsPathResolver:
 
     def resolve_relative_path(self):
         combined = path.realpath(path.join(self.current_dir, self.str_path))
+
+        if path.isfile(combined):
+            return combined
+
         # matching ../index to /index.js
         for ext in self.valid_extensions:
             file_path = combined + '.' + ext
@@ -82,6 +86,9 @@ class JsPathResolver:
         for root in self.roots:
             for vendor_dir in self.vendor_dirs:
                 combined = path.realpath(path.join(root, vendor_dir, self.str_path))
+
+                if path.isfile(combined):
+                    return combined
 
                 for ext in self.valid_extensions:
                     file_path = combined + '.' + ext
