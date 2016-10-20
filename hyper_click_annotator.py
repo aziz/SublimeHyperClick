@@ -78,7 +78,7 @@ if ST3118:
                 self.current_line = v.line(line_range.b)
                 v.erase_phantoms('hyper_click')
                 resolved_path = file_path.resolve()
-                print('resolved to => ', resolved_path)
+                # print('resolved to => ', resolved_path)
                 if len(resolved_path) > 0:
                     content = """
                         <span class="label label-success"><a href="{link}">{content}</a></span>

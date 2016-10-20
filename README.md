@@ -1,14 +1,17 @@
 # Sublime HyperClick
-single line description
+Quickly and easily jump between your files. The missing part of `Go to definition` functionality in Sublime.
 
-## Why
+![sublimehyperclick](https://cloud.githubusercontent.com/assets/3202/19578519/51558bb4-971c-11e6-8ef2-d256da53d1da.gif)
 
-Supported Languages and Syntaxes
 
-|  Language  |                                                Syntaxes                                               |
+## Supported Languages and Syntaxes
+
+|  Language  |                                                Syntax                                               |
 |------------|-------------------------------------------------------------------------------------------------------|
 | Javascript | `ecmascript.sublime-syntax` <br> `JavaScript.sublime-syntax` <br> `JavaScript (Babel).sublime-syntax` |
 | Sass       | `SCSS.tmLanguage` <br> `Sass.tmLanguage`                                                              |
+
+*You can contribute and add more language by adding a path resolver like [SassPathResolver](https://github.com/aziz/SublimeHyperClick/blob/master/hyper_click/sass_path_resolver.py)*
 
 
 ## Installation
@@ -22,6 +25,8 @@ Or clone this repo into your SublimeText Packages directory and rename it to `Hy
     * on cursor line
 * context menu
 * shortcut key
+
+<img width="748" alt="sublimehyperclickcontext" src="https://cloud.githubusercontent.com/assets/3202/19578923/480cacde-971e-11e6-9504-91c26737c486.png">
 
 ## Settings
 - disable annotations
