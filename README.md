@@ -11,7 +11,7 @@ Quickly and easily jump between your files. The missing part of `Go to definitio
 | Javascript | `ecmascript.sublime-syntax` <br> `JavaScript.sublime-syntax` <br> `JavaScript (Babel).sublime-syntax` |
 | Sass       | `SCSS.tmLanguage` <br> `Sass.tmLanguage`                                                              |
 
-*You can contribute and add more language by adding a path resolver like [SassPathResolver](https://github.com/aziz/SublimeHyperClick/blob/master/hyper_click/sass_path_resolver.py)*
+*You can contribute and add more languages by adding a path resolver like [SassPathResolver](https://github.com/aziz/SublimeHyperClick/blob/master/hyper_click/sass_path_resolver.py)*
 
 
 ## Installation
