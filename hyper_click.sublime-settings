@@ -3,7 +3,8 @@
     "js": [
       "ecmascript.sublime-syntax",
       "JavaScript.sublime-syntax",
-      "JavaScript (Babel).sublime-syntax"
+      "JavaScript (Babel).sublime-syntax",
+      "JavaScriptNext.tmLanguage"
     ],
     "sass": [
       "SCSS.tmLanguage",
