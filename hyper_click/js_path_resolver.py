@@ -69,6 +69,11 @@ class JsPathResolver:
                             for ext in self.valid_extensions:
                                 if path.isfile(dest + '.' + ext):
                                     return dest + '.' + ext
+                            for default_name in self.default_filenames:
+                                for ext in self.valid_extensions:
+                                    file_path = path.join(dest, default_name + '.' + ext)
+                                    if path.isfile(file_path):
+                                        return file_path
                     else:
                         for default_name in self.default_filenames:
                             for ext in self.valid_extensions:
