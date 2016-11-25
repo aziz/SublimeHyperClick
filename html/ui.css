@@ -11,6 +11,8 @@ html {
   --btn-greenish: color(var(--background) blend(var(--greenish) 30%));
   --content-padding: 0.5rem 1rem;
   --section-padding: 0.25rem 1rem;
+  margin: 0;
+  padding: 0;
 }
 
 #hyperClick {
