@@ -11,7 +11,7 @@ falls short for most languages since jumping between these required files needs
 some knowledge about how the language or package manager of the language is working.
 
 HyperClick tries to solve this issue. Currently, it knows how to jump between files
-in **Javascript** and **Sass** but can be easily extended to support more languages.
+in **Javascript**, **Sass** and **Stylus**  but can be easily extended to support more languages.
 
 ## Supported Languages and Syntaxes
 
@@ -19,6 +19,7 @@ in **Javascript** and **Sass** but can be easily extended to support more langua
 |------------|------------------------------------------|
 | Javascript | `ecmascript.sublime-syntax` <br> `JavaScript.sublime-syntax` <br> `JavaScript (Babel).sublime-syntax` <br> `JavaScriptNext.tmLanguage` |
 | Sass       | `SCSS.tmLanguage` <br> `Sass.tmLanguage` |
+| Stylus     | `Stylus.tmLanguage`                      |
 
 *You can contribute and add more languages by adding a path resolver like [SassPathResolver](https://github.com/aziz/SublimeHyperClick/blob/master/hyper_click/sass_path_resolver.py)*
 
@@ -83,6 +84,7 @@ file and a reddish button with `✘`. These symbols can be customized too.
 ```
 
 #### Default Settings
+see [hyper_click.sublime-settings](https://github.com/aziz/SublimeHyperClick/blob/master/hyper_click.sublime-settings) for up to date settings
 
 ```json
 {

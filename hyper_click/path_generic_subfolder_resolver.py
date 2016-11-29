@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from os import path
 
+
 # A default resolver that resolves to a subfolder along along with one of the valid extensions
 class GenericSubfolderResolver:
     def __init__(self, str_path, current_dir, roots, lang, settings):
@@ -19,5 +20,4 @@ class GenericSubfolderResolver:
             file_path = combined + '.' + ext
             if path.isfile(file_path):
                 return file_path
-
         return ''
