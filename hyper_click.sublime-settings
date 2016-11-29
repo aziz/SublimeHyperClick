@@ -9,6 +9,9 @@
     "sass": [
       "SCSS.tmLanguage",
       "Sass.tmLanguage"
+    ],
+    "stylus": [
+      "Stylus.tmLanguage"
     ]
   },
   "import_line_regex": {
@@ -19,11 +22,15 @@
     ],
     "sass": [
       "^@import\\s+['\"](.+)['\"];?$"
+    ],
+    "stylus": [
+      "^@import\\s+['\"](.+)['\"];?$"
     ]
   },
   "valid_extensions": {
     "js": ["js", "jsx"],
-    "sass": ["scss", "sass"]
+    "sass": ["scss", "sass"],
+    "stylus": ["styl", "stylus"]
   },
   "default_filenames": {
     "js": ["index"]

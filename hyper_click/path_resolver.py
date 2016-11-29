@@ -2,6 +2,7 @@
 from os import path
 from .js_path_resolver import JsPathResolver
 from .sass_path_resolver import SassPathResolver
+from .path_generic_subfolder_resolver import GenericSubfolderResolver
 
 
 class HyperClickPathResolver:
@@ -11,6 +12,8 @@ class HyperClickPathResolver:
             self.resolver = JsPathResolver(str_path, current_dir, roots, lang, settings)
         if lang == 'sass':
             self.resolver = SassPathResolver(str_path, current_dir, roots, lang, settings)
+        else:
+            self.resolver = GenericSubfolderResolver(str_path, current_dir, roots, lang, settings)
 
     def resolve(self):
         return self.resolver.resolve()
