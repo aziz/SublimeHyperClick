@@ -2,6 +2,7 @@
 from os import path
 from .js_path_resolver import JsPathResolver
 from .sass_path_resolver import SassPathResolver
+from .php_path_resolver import PhpPathResolver
 from .path_generic_subfolder_resolver import GenericSubfolderResolver
 
 
@@ -12,6 +13,8 @@ class HyperClickPathResolver:
             self.resolver = JsPathResolver(str_path, current_dir, roots, lang, settings)
         elif lang == 'sass':
             self.resolver = SassPathResolver(str_path, current_dir, roots, lang, settings)
+        elif lang == 'php':
+            self.resolver = PhpPathResolver(str_path, current_dir, roots, lang, settings)
         else:
             self.resolver = GenericSubfolderResolver(str_path, current_dir, roots, lang, settings)
 

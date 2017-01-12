@@ -10,6 +10,10 @@
       "SCSS.tmLanguage",
       "Sass.tmLanguage"
     ],
+    "php": [
+      "PHP.sublime-syntax",
+      "PHP Source.sublime-syntax"
+    ],
     "stylus": [
       "Stylus.tmLanguage"
     ]
@@ -23,6 +27,12 @@
     "sass": [
       "^@import\\s+['\"](.+)['\"];?$"
     ],
+    "php": [
+      "^import\\(['\"](.+)['\"]\\);?$",
+      "^import_once\\(['\"](.+)['\"]\\);?$",
+      "^require\\(['\"](.+)['\"]\\);?$",
+      "^require_once\\(['\"](.+)['\"]\\);?$"
+    ],
     "stylus": [
       "^@import\\s+['\"](.+)['\"];?$"
     ]
@@ -30,6 +40,7 @@
   "valid_extensions": {
     "js": ["js", "jsx"],
     "sass": ["scss", "sass"],
+    "php": ["php"],
     "stylus": ["styl", "stylus"]
   },
   "default_filenames": {
