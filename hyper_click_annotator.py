@@ -12,7 +12,9 @@ if ST3118:
     class HyperClickAnnotator(sublime_plugin.ViewEventListener):
         @classmethod
         def is_applicable(cls, settings):
-            syntax = settings.get('syntax')
+            syntax = settings.get('syntax', None)
+            if not syntax:
+                return False
             plugin_settings = sublime.load_settings('hyper_click.sublime-settings')
             annotations_enabled = plugin_settings.get('annotations_enabled')
             if not annotations_enabled:
