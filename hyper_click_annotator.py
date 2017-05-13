@@ -32,10 +32,6 @@ if ST3118:
             self.settings = sublime.load_settings('hyper_click.sublime-settings')
             self.css = sublime.load_resource("Packages/HyperClick/html/ui.css")
             self.html = sublime.load_resource("Packages/HyperClick/html/ui.html")
-            self.window = view.window()
-            self.roots = view.window().folders()
-            self.syntax = self.view.settings().get('syntax')
-            self.lang = self.get_lang(self.syntax)
 
         def is_valid_line(self, line_content):
             import_lines = self.settings.get('import_line_regex', {})
@@ -61,6 +57,10 @@ if ST3118:
                 self.window.open_file(url)
 
         def annotate(self, point):
+            self.window = self.view.window()
+            self.roots = self.view.window().folders()
+            self.syntax = self.view.settings().get('syntax')
+            self.lang = self.get_lang(self.syntax)
             v = self.view
             line_range = v.line(point)
 
