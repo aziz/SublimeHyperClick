@@ -26,7 +26,7 @@ class JsPathResolver:
         if self.str_path.startswith('.'):
             return self.resolve_relative_path()
         else:
-            if '/' in self.str_path:
+            if '/' in self.str_path and not self.str_path.startswith('@'):
                 return self.resolve_package_internal_path()
             else:
                 return self.resolve_package_root_path()
