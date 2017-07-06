@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
-from os import path
+from os import path, walk
 
 NODE_CORE_MODULES = ["assert", "buffer", "child_process", "cluster", "console", "constants",
                      "crypto", "dgram", "dns", "domain", "events", "fs", "http", "https",
@@ -20,7 +20,38 @@ class JsPathResolver:
         self.roots = roots
         self.valid_extensions = settings.get('valid_extensions', {})[lang]
         self.default_filenames = settings.get('default_filenames', {})[lang]
-        self.vendor_dirs = settings.get('vendor_dirs', {})[lang]
+        self.vendors = settings.get('vendor_dirs', {})[lang]
+        self.vendor_dirs = [];
+        self.matchingRoot = [root for root in self.roots if self.current_dir.startswith(root)]
+
+        start_path = self.current_dir
+        for vendor in self.vendors:
+            last_root    = start_path
+            current_root = start_path
+            found_path = None
+
+            while found_path is None and current_root:
+                pruned = False
+                for root, dirs, files in walk(current_root):
+                    if not pruned:
+                       try:
+                          # R'.emove the part of the tree we already searched
+                          del dirs[dirs.index(path.basename(last_root))]
+                          pruned = True
+                       except ValueError:
+                          pass
+                    if vendor in dirs:
+                       # found the vendor direcotry, stop
+                       found_path = path.join(root, vendor)
+                       self.vendor_dirs.append(found_path)
+                       break
+                # Otherwise, pop up a level, search again
+                last_root    = current_root
+                try:
+                    current_root = [path.dirname(last_root) for root in self.roots if path.dirname(last_root).startswith(root)][0]
+                except IndexError:
+                    current_root = None
+
 
     def resolve(self):
         if self.str_path.startswith('.'):
@@ -53,7 +84,7 @@ class JsPathResolver:
         return ''
 
     def resolve_package_root_path(self):
-        for root in self.roots:
+        for root in self.matchingRoot:
             for vendor_dir in self.vendor_dirs:
                 combined = path.realpath(path.join(root, vendor_dir, self.str_path))
                 package_json_path = path.join(combined, 'package.json')
