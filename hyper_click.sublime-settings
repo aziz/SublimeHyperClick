@@ -10,6 +10,9 @@
       "SCSS.tmLanguage",
       "Sass.tmLanguage"
     ],
+    "less": [
+      "LESS.tmLanguage"
+    ],
     "php": [
       "PHP.sublime-syntax",
       "PHP Source.sublime-syntax"
@@ -27,6 +30,9 @@
     "sass": [
       "^@import\\s+['\"](.+)['\"];?$"
     ],
+    "less": [
+      "^@import\\s+\\(?.*\\)?\\s*['\"](.+)['\"];?$"
+    ],
     "php": [
       "^import\\(['\"](.+)['\"]\\);?$",
       "^import_once\\(['\"](.+)['\"]\\);?$",
@@ -40,6 +46,7 @@
   "valid_extensions": {
     "js": ["js", "jsx"],
     "sass": ["scss", "sass"],
+    "less": ["less"],
     "php": ["php"],
     "stylus": ["styl", "stylus"]
   },
