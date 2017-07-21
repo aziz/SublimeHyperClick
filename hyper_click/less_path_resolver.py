@@ -17,4 +17,10 @@ class LessPathResolver:
         if path.isfile(file_path):
             return file_path
 
+        combined = path.realpath(path.join(self.current_dir, self.str_path))
+        # matching ../variables/palette to ../variables/palette.less
+        for ext in self.valid_extensions:
+            file_path = combined + '.' + ext
+            if path.isfile(file_path):
+                return file_path
         return ''
