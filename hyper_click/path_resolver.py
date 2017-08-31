@@ -4,6 +4,7 @@ from .js_path_resolver import JsPathResolver
 from .sass_path_resolver import SassPathResolver
 from .less_path_resolver import LessPathResolver
 from .php_path_resolver import PhpPathResolver
+from .html_path_resolver import HTMLPathResolver
 from .path_generic_subfolder_resolver import GenericSubfolderResolver
 
 
@@ -18,6 +19,8 @@ class HyperClickPathResolver:
             self.resolver = LessPathResolver(str_path, current_dir, roots, lang, settings)
         elif lang == 'php':
             self.resolver = PhpPathResolver(str_path, current_dir, roots, lang, settings)
+        elif lang == 'html':
+            self.resolver = HTMLPathResolver(str_path, current_dir, roots, lang, settings)
         else:
             self.resolver = GenericSubfolderResolver(str_path, current_dir, roots, lang, settings)
 

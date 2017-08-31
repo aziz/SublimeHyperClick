@@ -11,7 +11,7 @@ falls short for most languages since jumping between these required files needs
 some knowledge about how the language or package manager of the language is working.
 
 HyperClick tries to solve this issue. Currently, it knows how to jump between files
-in **Javascript**, **Sass**, **Less**, **Stylus** and **PHP**  but can be easily 
+in **Javascript**, **Sass**, **Less**, **Stylus**, **PHP**, **HTML (imports)**  but can be easily
 extended to support more languages.
 
 ## Supported Languages and Syntaxes
@@ -23,6 +23,7 @@ extended to support more languages.
 | Less       | `LESS.tmLanguage`                        |
 | Stylus     | `Stylus.tmLanguage`                      |
 | PHP        | `PHP.sublime-syntax` <br> `PHP Source.sublime-syntax`  |
+| HTML       | `HTML.sublime-syntax` |
 
 *You can contribute and add more languages by adding a path resolver like [SassPathResolver](https://github.com/aziz/SublimeHyperClick/blob/master/hyper_click/sass_path_resolver.py)*
 
@@ -101,27 +102,60 @@ see [hyper_click.sublime-settings](https://github.com/aziz/SublimeHyperClick/blo
     "sass": [
       "SCSS.tmLanguage",
       "Sass.tmLanguage"
+    ],
+    "less": [
+      "LESS.tmLanguage"
+    ],
+    "php": [
+      "PHP.sublime-syntax",
+      "PHP Source.sublime-syntax"
+    ],
+    "stylus": [
+      "Stylus.tmLanguage"
+    ],
+    "html": [
+      "HTML.sublime-syntax"
     ]
   },
   "import_line_regex": {
     "js": [
-      "^import\\s+.+\\s+from\\s+['\"](.+)['\"];?$",
       "^import\\s+['\"](.+)['\"];?$",
-      ".+require\\(['\"](.+)['\"]\\).+"
+      ".*from\\s+['\"](.+)['\"];?$",
+      ".*require\\(['\"](.+?)['\"]\\).*"
     ],
     "sass": [
       "^@import\\s+['\"](.+)['\"];?$"
+    ],
+    "less": [
+      "^@import\\s+\\(?.*\\)?\\s*['\"](.+)['\"];?$"
+    ],
+    "php": [
+      "^import\\(['\"](.+)['\"]\\);?$",
+      "^import_once\\(['\"](.+)['\"]\\);?$",
+      "^require\\(['\"](.+)['\"]\\);?$",
+      "^require_once\\(['\"](.+)['\"]\\);?$"
+    ],
+    "stylus": [
+      "^@import\\s+['\"](.+)['\"];?$"
+    ],
+    "html": [
+      ".*?<link\\s+rel=\"import\"\\s+href=['\"](.+)['\"]/?>.*?"
     ]
   },
   "valid_extensions": {
     "js": ["js", "jsx"],
-    "sass": ["scss", "sass"]
+    "sass": ["scss", "sass"],
+    "less": ["less"],
+    "php": ["php"],
+    "stylus": ["styl", "stylus"],
+    "html": ["html"]
   },
   "default_filenames": {
     "js": ["index"]
   },
   "vendor_dirs": {
-    "js": ["node_modules"]
+    "js": ["node_modules"],
+    "html": ["node_modules", "bower_components"]
   },
   "annotation_found_text": "➜",
   "annotation_not_found_text": "✘",
