@@ -33,7 +33,7 @@ class JsPathResolver:
             while found_path is None and current_root:
                 pruned = False
                 for root, dirs, files in walk(current_root):
-                    if not pruned:
+                    if not pruned and not vendor in dirs:
                        try:
                           # R'.emove the part of the tree we already searched
                           del dirs[dirs.index(path.basename(last_root))]
