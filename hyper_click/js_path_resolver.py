@@ -20,37 +20,8 @@ class JsPathResolver:
         self.roots = roots
         self.valid_extensions = settings.get('valid_extensions', {})[lang]
         self.default_filenames = settings.get('default_filenames', {})[lang]
-        self.vendors = settings.get('vendor_dirs', {})[lang]
-        self.vendor_dirs = [];
+        self.vendor_dirs = settings.get('vendor_dirs', {})[lang];
         self.matchingRoot = [root for root in self.roots if self.current_dir.startswith(root)]
-
-        start_path = self.current_dir
-        for vendor in self.vendors:
-            last_root    = start_path
-            current_root = start_path
-            found_path = None
-
-            while found_path is None and current_root:
-                pruned = False
-                for root, dirs, files in walk(current_root):
-                    if not pruned and not vendor in dirs:
-                       try:
-                          # R'.emove the part of the tree we already searched
-                          del dirs[dirs.index(path.basename(last_root))]
-                          pruned = True
-                       except ValueError:
-                          pass
-                    if vendor in dirs:
-                       # found the vendor direcotry, stop
-                       found_path = path.join(root, vendor)
-                       self.vendor_dirs.append(found_path)
-                       break
-                # Otherwise, pop up a level, search again
-                last_root    = current_root
-                try:
-                    current_root = [path.dirname(last_root) for root in self.roots if path.dirname(last_root).startswith(root)][0]
-                except IndexError:
-                    current_root = None
 
 
     def resolve(self):
