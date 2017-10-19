@@ -123,6 +123,9 @@ see [hyper_click.sublime-settings](https://github.com/aziz/SublimeHyperClick/blo
   "vendor_dirs": {
     "js": ["node_modules"]
   },
+  "lookup_paths": {
+    "js": []
+  },
   "annotation_found_text": "➜",
   "annotation_not_found_text": "✘",
   "annotations_enabled": true

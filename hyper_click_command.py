@@ -34,7 +34,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
                 self.roots, self.lang, self.settings
             )
             resolved_path = file_path.resolve()
-            if len(resolved_path) > 0:
+            if resolved_path:
                 if resolved_path.startswith('http://') or resolved_path.startswith('https://'):
                     webbrowser.open_new_tab(resolved_path)
                 else:

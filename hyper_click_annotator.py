@@ -81,7 +81,7 @@ if ST3118:
                 v.erase_phantoms('hyper_click')
                 resolved_path = file_path.resolve()
                 # print('resolved to => ', resolved_path)
-                if len(resolved_path) > 0:
+                if resolved_path:
                     content = """
                         <span class="label label-success"><a href="{link}">{content}</a></span>
                     """.format(
