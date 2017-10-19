@@ -18,6 +18,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         self.lang = self.get_lang(self.syntax)
 
     def run(self, edit):
+        self.window = self.view.window()
         v = self.view
 
         if len(v.sel()) != 1:
