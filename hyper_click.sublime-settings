@@ -19,6 +19,9 @@
     ],
     "stylus": [
       "Stylus.tmLanguage"
+    ],
+    "html": [
+      "HTML.sublime-syntax"
     ]
   },
   "import_line_regex": {
@@ -41,6 +44,9 @@
     ],
     "stylus": [
       "^@import\\s+['\"](.+)['\"];?$"
+    ],
+    "html": [
+      ".*?<link\\s+rel=\"import\"\\s+href=['\"](.+)['\"]/?>.*?"
     ]
   },
   "valid_extensions": {
@@ -48,13 +54,15 @@
     "sass": ["scss", "sass"],
     "less": ["less"],
     "php": ["php"],
-    "stylus": ["styl", "stylus"]
+    "stylus": ["styl", "stylus"],
+    "html": ["html"]
   },
   "default_filenames": {
     "js": ["index"]
   },
   "vendor_dirs": {
-    "js": ["node_modules"]
+    "js": ["node_modules"],
+    "html": ["node_modules", "bower_components"]
   },
   "lookup_paths": {
     "js": []
