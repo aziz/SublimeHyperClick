@@ -30,8 +30,8 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         matched = self.is_valid_line(line_content)
         if matched:
             destination_str = matched.group(1)
-            file_path = HyperClickPathResolver(
-                destination_str, v.file_name(),
+            file_path = HyperClickPathResolver(v,
+                destination_str,
                 self.roots, self.lang, self.settings
             )
             resolved_path = file_path.resolve()

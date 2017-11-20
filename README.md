@@ -24,6 +24,7 @@ extended to support more languages.
 | Stylus     | `Stylus.tmLanguage`                      |
 | PHP        | `PHP.sublime-syntax` <br> `PHP Source.sublime-syntax`  |
 | HTML       | `HTML.sublime-syntax` |
+| JSTL       | `JSTL.sublime-syntax` |
 
 *You can contribute and add more languages by adding a path resolver like [SassPathResolver](https://github.com/aziz/SublimeHyperClick/blob/master/hyper_click/sass_path_resolver.py)*
 
@@ -115,6 +116,9 @@ see [hyper_click.sublime-settings](https://github.com/aziz/SublimeHyperClick/blo
     ],
     "html": [
       "HTML.sublime-syntax"
+    ],
+    "jstl": [
+      "jstl.tmLanguage"
     ]
   },
   "import_line_regex": {
@@ -140,6 +144,9 @@ see [hyper_click.sublime-settings](https://github.com/aziz/SublimeHyperClick/blo
     ],
     "html": [
       ".*?<link\\s+rel=\"import\"\\s+href=['\"](.+)['\"]/?>.*?"
+    ],
+    "jstl": [
+      "(<([\\w-]*)\\:([\\w-]*))",
     ]
   },
   "valid_extensions": {
@@ -148,17 +155,23 @@ see [hyper_click.sublime-settings](https://github.com/aziz/SublimeHyperClick/blo
     "less": ["less"],
     "php": ["php"],
     "stylus": ["styl", "stylus"],
-    "html": ["html"]
+    "html": ["html"],
+    "jstl": ["jsp", "tag"]
   },
   "default_filenames": {
     "js": ["index"]
   },
   "vendor_dirs": {
     "js": ["node_modules"],
-    "html": ["node_modules", "bower_components"]
+    "html": ["node_modules", "bower_components"],
+    "jstl": ["WEB-INF"]
   },
   "lookup_paths": {
-    "js": []
+    "js": [],
+    "jstl": [
+      "taglib *prefix ?= ?[\"'](.*)[\"'] *tagdir ?= ?[\"'](.*)[\"']",
+      "xmlns:(\\w*)=[\"']urn:jsptagdir:(.*?)[\"']"
+    ]
   },
   "annotation_found_text": "➜",
   "annotation_not_found_text": "✘",

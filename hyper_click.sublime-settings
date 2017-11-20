@@ -22,6 +22,9 @@
     ],
     "html": [
       "HTML.sublime-syntax"
+    ],
+    "jstl": [
+      "jstl.tmLanguage"
     ]
   },
   "import_line_regex": {
@@ -47,6 +50,9 @@
     ],
     "html": [
       ".*?<link\\s+rel=\"import\"\\s+href=['\"](.+)['\"]/?>.*?"
+    ],
+    "jstl": [
+      "(<([\\w-]*)\\:([\\w-]*))",
     ]
   },
   "valid_extensions": {
@@ -55,17 +61,23 @@
     "less": ["less"],
     "php": ["php"],
     "stylus": ["styl", "stylus"],
-    "html": ["html"]
+    "html": ["html"],
+    "jstl": ["jsp", "tag"]
   },
   "default_filenames": {
     "js": ["index"]
   },
   "vendor_dirs": {
     "js": ["node_modules"],
-    "html": ["node_modules", "bower_components"]
+    "html": ["node_modules", "bower_components"],
+    "jstl": ["WEB-INF"]
   },
   "lookup_paths": {
-    "js": []
+    "js": [],
+    "jstl": [
+      "taglib *prefix ?= ?[\"'](.*)[\"'] *tagdir ?= ?[\"'](.*)[\"']",
+      "xmlns:(\\w*)=[\"']urn:jsptagdir:(.*?)[\"']"
+    ]
   },
   "annotation_found_text": "➜",
   "annotation_not_found_text": "✘",
