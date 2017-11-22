@@ -25,6 +25,30 @@
     ],
     "jstl": [
       "jstl.tmLanguage"
+    ],
+    "css": [
+      "CSS.sublime-syntax",
+      "PostCSS.tmLanguage"
+    ],
+    "pug": [
+      "Pug.tmLanguage"
+    ],
+    "sugarss": [
+      "Sss.tmLanguage",
+      "SugarSS.tmLanguage"
+    ],
+    "sugarml": [
+      "SugarML.tmLanguage"
+    ],
+    "nunjucks": [
+      "Nunjucks.tmLanguage"
+    ],
+    "jinja2": [
+      "Jinja2.tmLanguage"
+    ],
+    "twig": [
+      "HTML (Twig).tmLanguage",
+      "Craft-Twig.tmLanguage"
     ]
   },
   "import_line_regex": {
@@ -53,6 +77,40 @@
     ],
     "jstl": [
       "(<([\\w-]*)\\:([\\w-]*))",
+    ],
+    "css": [
+      "^@import\\s+['\"](.+)['\"].*?;$",
+      "^@import\\s+url\\(['\"](.+)['\"]\\).*?;$"
+    ],
+    "pug": [
+      "^include\\s+(.+)$",
+      "^extends\\s+(.+)$"
+    ],
+    "sugarss": [
+      "^@import\\s+['\"](.+)['\"]$"
+    ],
+    "sugarml": [
+      "^include\\(src=['\"]\/?(.+)['\"]\\)$",
+      "^extends\\(src=['\"]\/?(.+)['\"]\\)$",
+    ],
+    "nunjucks": [
+      "^{%\\s+extends\\s+['\"](.+)['\"].*?%}$",
+      "^{%\\s+include\\s+['\"](.+)['\"].*?%}$",
+      "^{%\\s+import\\s+['\"](.+)['\"].*?%}$",
+      "^{%\\s+from\\s+['\"](.+)['\"]\\s+import.*?%}$"
+    ],
+    "jinja2": [
+      "^{%\\s+extends\\s+['\"](.+)['\"].*?%}$",
+      "^{%\\s+include\\s+['\"](.+)['\"].*?%}$",
+      "^{%\\s+import\\s+['\"](.+)['\"].*?%}$",
+      "^{%\\s+from\\s+['\"](.+)['\"]\\s+import.*?%}$"
+    ],
+    "twig": [
+      "^{%\\s+extends\\s+['\"](.+)['\"].*?%}$",
+      "^{%\\s+include\\s+['\"](.+)['\"].*?%}$",
+      "^{%\\s+import\\s+['\"](.+)['\"].*?%}$",
+      "^{%\\s+from\\s+['\"](.+)['\"]\\s+import.*?%}$",
+      "^{%\\s+embed\\s+['\"](.+)['\"].*?%}$",
     ]
   },
   "valid_extensions": {
@@ -62,7 +120,14 @@
     "php": ["php"],
     "stylus": ["styl", "stylus"],
     "html": ["html"],
-    "jstl": ["jsp", "tag"]
+    "jstl": ["jsp", "tag"],
+    "css": ["css", "pcss", "postcss"],
+    "pug": ["pug", "jade"],
+    "sugarss": ["sss"],
+    "sugarml": ["sgr"],
+    "nunjucks": ["njk", "nunjucks", "njs", "html"],
+    "jinja2": ["j2"],
+    "twig": ["twig"]
   },
   "default_filenames": {
     "js": ["index"]
