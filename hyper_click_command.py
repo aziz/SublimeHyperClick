@@ -13,7 +13,6 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         self.view = view
         self.settings = sublime.load_settings('hyper_click.sublime-settings')
         self.window = view.window()
-        self.roots = self.window and self.window.folders()
         self.syntax = self.view.settings().get('syntax')
         self.lang = self.get_lang(self.syntax)
 
@@ -24,15 +23,21 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         if len(v.sel()) != 1:
             return
 
+        # Setting self.roots here (instead of in `__init__`) fixes a bug with files opened through the quick panel
+        self.roots = self.window and self.window.folders()
+        # Per-project settings are optional
+        self.proj_settings = self.window.project_data().get('hyper_click', {})
+
         cursor = v.sel()[0].a
         line_range = v.line(cursor)
         line_content = v.substr(line_range).strip()
         matched = self.is_valid_line(line_content)
         if matched:
             destination_str = matched.group(1)
-            file_path = HyperClickPathResolver(v,
-                destination_str,
-                self.roots, self.lang, self.settings
+            file_path = HyperClickPathResolver(
+                v, destination_str,
+                self.roots, self.lang, self.settings,
+                self.proj_settings
             )
             resolved_path = file_path.resolve()
             if resolved_path:

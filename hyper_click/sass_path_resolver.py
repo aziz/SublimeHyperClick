@@ -3,7 +3,7 @@ from os import path
 
 
 class SassPathResolver:
-    def __init__(self, str_path, current_dir, roots, lang, settings):
+    def __init__(self, str_path, current_dir, roots, lang, settings, proj_settings):
         self.str_path = str_path
         self.current_dir = current_dir
         self.lang = lang
