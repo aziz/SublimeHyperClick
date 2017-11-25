@@ -61,7 +61,7 @@ if ST3118:
             self.roots = self.view.window().folders()
             self.syntax = self.view.settings().get('syntax')
             self.lang = self.get_lang(self.syntax)
-            
+
             # Per-project settings are optional
             self.proj_settings = self.window.project_data().get('hyper_click', {})
 
