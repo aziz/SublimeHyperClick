@@ -72,8 +72,8 @@ if ST3118:
 
             if matched:
                 destination_str = matched.group(1)
-                file_path = HyperClickPathResolver(
-                    destination_str, v.file_name(),
+                file_path = HyperClickPathResolver(v,
+                    destination_str,
                     self.roots, self.lang, self.settings
                 )
                 region = sublime.Region(line_range.b, line_range.b)
