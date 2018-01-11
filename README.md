@@ -10,9 +10,7 @@ files. `Go to Definition` functionality of Sublime, trying to be a generic solut
 falls short for most languages since jumping between these required files needs
 some knowledge about how the language or package manager of the language is working.
 
-HyperClick tries to solve this issue. Currently, it knows how to jump between files
-in **Javascript**, **Sass**, **Less**, **Stylus**, **PHP**, **HTML (imports)**  but can be easily
-extended to support more languages.
+HyperClick tries to solve this issue. Currently, it knows how to jump between files in the following languages, but it can easily be extended to add more languages:
 
 ## Supported Languages and Syntaxes
 
@@ -25,6 +23,13 @@ extended to support more languages.
 | PHP        | `PHP.sublime-syntax` <br> `PHP Source.sublime-syntax`  |
 | HTML       | `HTML.sublime-syntax` |
 | JSTL       | `JSTL.sublime-syntax` |
+| CSS/PostCSS | `CSS.sublime-syntax` <br> `PostCSS.tmLanguage` |
+| Pug        | `Pug.tmLanguage` |
+| SugarSS    | `Sss.tmLanguage` <br> `SugarSS.tmLanguage` |
+| SugarML    | `SugarML.tmLanguage` |
+| Nunjucks   | `Nunjucks.tmLanguage` |
+| Jinja2     | `Jinja2.tmLanguage` |
+| Twig       | `HTML (Twig).tmLanguage` <br> `Craft-Twig.tmLanguage` |
 
 *You can contribute and add more languages by adding a path resolver like [SassPathResolver](https://github.com/aziz/SublimeHyperClick/blob/master/hyper_click/sass_path_resolver.py)*
 

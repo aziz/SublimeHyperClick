@@ -61,6 +61,10 @@ if ST3118:
             self.roots = self.view.window().folders()
             self.syntax = self.view.settings().get('syntax')
             self.lang = self.get_lang(self.syntax)
+
+            # Per-project settings are optional
+            self.proj_settings = self.window.project_data().get('hyper_click', {})
+
             v = self.view
             line_range = v.line(point)
 
@@ -72,9 +76,10 @@ if ST3118:
 
             if matched:
                 destination_str = matched.group(1)
-                file_path = HyperClickPathResolver(v,
-                    destination_str,
-                    self.roots, self.lang, self.settings
+                file_path = HyperClickPathResolver(
+                    v, destination_str,
+                    self.roots, self.lang, self.settings,
+                    self.proj_settings
                 )
                 region = sublime.Region(line_range.b, line_range.b)
                 self.current_line = v.line(line_range.b)

@@ -37,7 +37,7 @@ def walkup_dir(start_path, vendor_dirs, endpath = '/'):
 # doc: https://nodejs.org/dist/latest-v8.x/docs/api/modules.html#modules_all_together
 
 class JsPathResolver:
-    def __init__(self, str_path, current_dir, roots, lang, settings):
+    def __init__(self, str_path, current_dir, roots, lang, settings, proj_settings):
         self.str_path = str_path
         self.current_dir = current_dir
         self.lang = lang
