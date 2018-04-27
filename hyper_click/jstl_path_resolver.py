@@ -34,9 +34,9 @@ class JstlPathResolver:
         if matched:
             if matched.group(1) == self.str_path:
                 complete_path = matched.group(2) + "/" + self.str_file + ".tag"
-                file_path = path.realpath(path.join(self.current_dir, self.str_path))
+                #file_path = path.realpath(path.join(self.current_dir, self.str_path))
                 for vendor in self.vendors:
-                    base_dir = re.split(vendor,file_path)
+                    base_dir = re.split(vendor,self.current_dir)
                     dest_file_path = base_dir[0] + complete_path
                     if path.isfile(dest_file_path):
                         return dest_file_path
