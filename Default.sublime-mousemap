@@ -1,0 +1,8 @@
+[
+  {
+    "button": "button1",
+    "modifiers": ["super", "alt"],
+    "command": "hyper_click_jump",
+    "press_command": "drag_select"
+  }
+]
