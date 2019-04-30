@@ -26,7 +26,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         # Setting self.roots here (instead of in `__init__`) fixes a bug with files opened through the quick panel
         self.roots = self.window and self.window.folders()
         # Per-project settings are optional
-        self.proj_settings = self.window.project_data().get('hyper_click', {})
+        self.proj_settings = sublime.active_window().active_view().settings().get('hyper_click', {})
 
         cursor = v.sel()[0].a
         line_range = v.line(cursor)
