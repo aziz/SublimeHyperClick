@@ -117,7 +117,7 @@
     ]
   },
   "valid_extensions": {
-    "js": ["js", "jsx", "vue"],
+    "js": ["js", "jsx", "vue", "mjs"],
     "sass": ["scss", "sass"],
     "less": ["less"],
     "php": ["php"],
