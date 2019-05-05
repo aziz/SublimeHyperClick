@@ -45,8 +45,8 @@ class JsPathResolver:
         self.roots = roots
         self.valid_extensions = settings.get('valid_extensions', {})[lang]
         self.vendor_dirs = settings.get('vendor_dirs', {})[lang];
-        self.matchingRoot = [root for root in self.roots if self.current_dir.startswith(root)]
-        self.currentRoot = self.matchingRoot[0]
+        self.matchingRoots = [root for root in self.roots if self.current_dir.startswith(root)]
+        self.currentRoot = self.matchingRoots[0] if self.matchingRoots else self.current_dir
 
     def resolve(self):
         if find_index(NODE_CORE_MODULES, self.str_path) != -1:
