@@ -14,7 +14,7 @@ class GenericPathResolver:
         self.proj_settings = proj_settings
 
         self.matching_root = [root for root in self.roots if self.current_dir.startswith(root)]
-        self.current_root = self.matching_root[0]
+        self.current_root = self.matching_root[0] if self.matching_root else self.current_dir
         self.lookup_paths = self.proj_settings.get('lookup_paths', {}).get(lang, False) or settings.get('lookup_paths', {}).get(lang, False) or []
 
     def resolve(self):
