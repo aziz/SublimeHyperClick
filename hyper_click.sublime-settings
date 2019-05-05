@@ -5,6 +5,7 @@
       "JavaScript.sublime-syntax",
       "JavaScript (Babel).sublime-syntax",
       "JavaScriptNext.tmLanguage",
+      "JavaScript.tmLanguage",
       "naomi.fjsx15.sublime-syntax",
       "naomi.jsx1.sublime-syntax",
       "Vue Component.sublime-syntax"
@@ -58,7 +59,8 @@
     "js": [
       "^import\\s+['\"](.+)['\"];?$",
       ".*from\\s+['\"](.+)['\"];?$",
-      ".*require\\(['\"](.+?)['\"]\\).*"
+      ".*require\\(['\"](.+?)['\"]\\).*",
+      ".*import\\((?:\\/\\*.+?\\*\\/\\s+)?['\"](.+)['\"]\\)(?:[;\\.,])?",
     ],
     "sass": [
       "^@import\\s+['\"](.+)['\"];?$"
@@ -114,10 +116,13 @@
       "^{%\\s+import\\s+['\"](.+)['\"].*?%}$",
       "^{%\\s+from\\s+['\"](.+)['\"]\\s+import.*?%}$",
       "^{%\\s+embed\\s+['\"](.+)['\"].*?%}$",
+      "^{%\\s+use\\s+['\"](.+)['\"].*?%}$",
+      "^{%\\s+.+?\\s+with\\s+['\"](.+)['\"].*?%}$",
+      "^{{\\s+include\\(['\"](.+)['\"].*?$"
     ]
   },
   "valid_extensions": {
-    "js": ["js", "jsx", "vue"],
+    "js": ["js", "jsx", "vue", "mjs"],
     "sass": ["scss", "sass"],
     "less": ["less"],
     "php": ["php"],
