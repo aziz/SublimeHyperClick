@@ -4,7 +4,8 @@
       "ecmascript.sublime-syntax",
       "JavaScript.sublime-syntax",
       "JavaScript (Babel).sublime-syntax",
-      "JavaScriptNext.tmLanguage"
+      "JavaScriptNext.tmLanguage",
+      "Vue Component.sublime-syntax"
     ],
     "sass": [
       "SCSS.tmLanguage",
@@ -53,8 +54,8 @@
   },
   "import_line_regex": {
     "js": [
-      "^import\\s+['\"](.+)['\"];?",
-      ".*from\\s+['\"](.+)['\"];?",
+      "^import\\s+['\"](.+)['\"];?$",
+      ".*from\\s+['\"](.+)['\"];?$",
       ".*require\\(['\"](.+?)['\"]\\).*"
     ],
     "sass": [
@@ -114,7 +115,7 @@
     ]
   },
   "valid_extensions": {
-    "js": ["js", "jsx"],
+    "js": ["js", "jsx", "vue"],
     "sass": ["scss", "sass"],
     "less": ["less"],
     "php": ["php"],
