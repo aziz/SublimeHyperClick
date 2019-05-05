@@ -5,6 +5,8 @@
       "JavaScript.sublime-syntax",
       "JavaScript (Babel).sublime-syntax",
       "JavaScriptNext.tmLanguage",
+      "naomi.fjsx15.sublime-syntax",
+      "naomi.jsx1.sublime-syntax",
       "Vue Component.sublime-syntax"
     ],
     "sass": [
