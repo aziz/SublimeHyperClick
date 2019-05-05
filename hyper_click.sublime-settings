@@ -6,7 +6,8 @@
       "JavaScript (Babel).sublime-syntax",
       "JavaScriptNext.tmLanguage",
       "naomi.fjsx15.sublime-syntax",
-      "naomi.jsx1.sublime-syntax"
+      "naomi.jsx1.sublime-syntax",
+      "Vue Component.sublime-syntax"
     ],
     "sass": [
       "SCSS.tmLanguage",
@@ -116,7 +117,7 @@
     ]
   },
   "valid_extensions": {
-    "js": ["js", "jsx"],
+    "js": ["js", "jsx", "vue"],
     "sass": ["scss", "sass"],
     "less": ["less"],
     "php": ["php"],
