@@ -63,7 +63,7 @@ if ST3118:
             self.lang = self.get_lang(self.syntax)
 
             # Per-project settings are optional
-            self.proj_settings = sublime.active_window().active_view().settings().get('hyper_click', {})
+            self.proj_settings = self.view.settings().get('hyper_click', {})
 
             v = self.view
             line_range = v.line(point)
