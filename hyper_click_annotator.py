@@ -110,6 +110,7 @@ if ST3118:
                         sublime.LAYOUT_INLINE, self.on_navigate
                     )
             else:
+                self.current_line = (-1, -1)
                 v.erase_phantoms('hyper_click')
 
         # ---------------------------------------
