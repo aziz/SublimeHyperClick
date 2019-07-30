@@ -152,7 +152,11 @@
     "jstl": [
       "taglib *prefix ?= ?[\"'](.*)[\"'] *tagdir ?= ?[\"'](.*)[\"']",
       "xmlns:(\\w*)=[\"']urn:jsptagdir:(.*?)[\"']"
-    ]
+    ],
+    "twig": [
+      "templates",
+      "views",
+    ],
   },
   "annotation_found_text": "➜",
   "annotation_not_found_text": "✘",
