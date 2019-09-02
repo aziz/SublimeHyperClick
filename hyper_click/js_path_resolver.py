@@ -58,6 +58,10 @@ class JsPathResolver:
         if self.str_path.startswith('/'):
             context_dir = '/'
 
+        if self.str_path.startswith('@'):
+            file_path = self.str_path[2:]
+            return self.resolve_src(file_path, self.current_dir)
+
         if self.str_path.startswith('./') or self.str_path.startswith('../') or context_dir == '/':
             result = self.resolve_relative_to_dir(self.str_path, context_dir)
             if result:
@@ -71,6 +75,16 @@ class JsPathResolver:
     def resolve_relative_to_dir(self, target, directory):
         combined = path.realpath(path.join(directory, target))
         return self.resolve_as_file(combined) or self.resolve_as_directory(combined)
+
+    def resolve_src(self, target, start_dir):
+        for vendor_path in walkup_dir(start_dir, ['src'], self.currentRoot):
+            lookup_path = path.realpath(path.join(vendor_path, target))
+            result = self.resolve_as_file(lookup_path)
+            if result:
+                return result
+            result = self.resolve_as_directory(lookup_path)
+            if result:
+                return result
 
     def resolve_node_modules(self, target, start_dir):
         for vendor_path in walkup_dir(start_dir, self.vendor_dirs, self.currentRoot):
