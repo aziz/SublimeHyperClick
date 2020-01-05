@@ -46,14 +46,23 @@ class JsPathResolver:
         self.valid_extensions = settings.get('valid_extensions', {})[lang]
         self.proj_settings = proj_settings
         self.vendor_dirs = settings.get('vendor_dirs', {})[lang];
+        self.aliases = settings.get('aliases',{})[lang]
         self.matchingRoots = [root for root in self.roots if self.current_dir.startswith(root)]
         self.currentRoot = self.matchingRoots[0] if self.matchingRoots else self.current_dir
         self.lookup_paths = self.proj_settings.get('lookup_paths', {}).get(lang, False) or settings.get('lookup_paths', {}).get(lang, False) or []
 
     def resolve(self):
+        # Resolve by global aliases
+        for alias, alias_source in self.aliases.items():
+            result = self.resolve_from_alias(alias, alias_source)
+            if result:
+                return result
+
+        # Core modules
         if find_index(NODE_CORE_MODULES, self.str_path) != -1:
             return NODE_CORE_MODULES_TEMPLATE.format(self.str_path)
 
+        # Relative paths
         context_dir = self.current_dir
         if self.str_path.startswith('/'):
             context_dir = '/'
@@ -63,11 +72,25 @@ class JsPathResolver:
             if result:
                 return result
 
+        # Lookup paths
         result = self.resolve_in_lookup_paths(self.str_path)
         if result:
             return result
+
+        # Node modules
         return self.resolve_node_modules(self.str_path, self.current_dir)
 
+    def resolve_from_alias (self, alias, alias_source):
+        if (self.str_path == alias):
+            result = self.resolve_relative_to_dir(self.str_path, self.currentRoot)
+            if result:
+                return result
+        elif (self.str_path.startswith(alias + '/')):
+            alias_path = path.join(alias_source, self.str_path[len(alias):])
+            result = self.resolve_relative_to_dir(alias_path, self.currentRoot)
+            if result:
+                return result
+    
     def resolve_relative_to_dir(self, target, directory):
         combined = path.realpath(path.join(directory, target))
         return self.resolve_as_file(combined) or self.resolve_as_directory(combined)
