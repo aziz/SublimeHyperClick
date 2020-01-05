@@ -13,6 +13,8 @@
       "TypeScriptReact.tmLanguage"
     ],
     "sass": [
+      "SCSS.sublime-syntax",
+      "Sass.sublime-syntax",
       "SCSS.tmLanguage",
       "Sass.tmLanguage"
     ],
