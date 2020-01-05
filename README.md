@@ -171,6 +171,9 @@ see [hyper_click.sublime-settings](https://github.com/aziz/SublimeHyperClick/blo
     "html": ["node_modules", "bower_components"],
     "jstl": ["WEB-INF"]
   },
+  "aliases": {
+    "js": {}
+  },
   "lookup_paths": {
     "js": [],
     "jstl": [

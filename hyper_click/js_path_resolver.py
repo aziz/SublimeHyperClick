@@ -81,15 +81,10 @@ class JsPathResolver:
         return self.resolve_node_modules(self.str_path, self.current_dir)
 
     def resolve_from_alias (self, alias, alias_source):
-        if (self.str_path == alias):
-            result = self.resolve_relative_to_dir(self.str_path, self.currentRoot)
-            if result:
-                return result
-        elif (self.str_path.startswith(alias + '/')):
-            alias_path = path.join(alias_source, self.str_path[len(alias):])
-            result = self.resolve_relative_to_dir(alias_path, self.currentRoot)
-            if result:
-                return result
+        alias_path = path.join(alias_source, self.str_path[len(alias) + 1:])
+        result = self.resolve_relative_to_dir(alias_path, self.currentRoot)
+        if result:
+            return result
     
     def resolve_relative_to_dir(self, target, directory):
         combined = path.realpath(path.join(directory, target))
