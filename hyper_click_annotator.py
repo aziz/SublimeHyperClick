@@ -63,7 +63,7 @@ if ST3118:
             self.lang = self.get_lang(self.syntax)
 
             # Per-project settings are optional
-            self.proj_settings = self.window.project_data().get('hyper_click', {})
+            self.proj_settings = self.view.settings().get('hyper_click', {})
 
             v = self.view
             line_range = v.line(point)
@@ -110,6 +110,7 @@ if ST3118:
                         sublime.LAYOUT_INLINE, self.on_navigate
                     )
             else:
+                self.current_line = (-1, -1)
                 v.erase_phantoms('hyper_click')
 
         # ---------------------------------------
