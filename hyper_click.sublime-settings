@@ -10,7 +10,8 @@
       "naomi.jsx1.sublime-syntax",
       "Vue Component.sublime-syntax",
       "TypeScript.tmLanguage",
-      "TypeScriptReact.tmLanguage"
+      "TypeScriptReact.tmLanguage",
+      "Svelte.sublime-syntax"
     ],
     "sass": [
       "SCSS.sublime-syntax",
@@ -126,7 +127,7 @@
     ]
   },
   "valid_extensions": {
-    "js": ["js", "jsx", "vue", "mjs", "ts", "tsx"],
+    "js": ["js", "jsx", "vue", "mjs", "ts", "tsx", "svelte"],
     "sass": ["scss", "sass"],
     "less": ["less"],
     "php": ["php"],
