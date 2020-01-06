@@ -20,7 +20,8 @@
       "Sass.tmLanguage"
     ],
     "less": [
-      "LESS.tmLanguage"
+      "LESS.tmLanguage",
+      "LESS.sublime-syntax"
     ],
     "php": [
       "PHP.sublime-syntax",
@@ -50,7 +51,9 @@
       "SugarML.tmLanguage"
     ],
     "nunjucks": [
-      "Nunjucks.tmLanguage"
+      "Nunjucks.tmLanguage",
+      "Nunjucks.sublime-syntax",
+      "HTML(Nunjucks).sublime-syntax"
     ],
     "jinja2": [
       "Jinja2.tmLanguage"
