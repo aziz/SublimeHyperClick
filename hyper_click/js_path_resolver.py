@@ -46,7 +46,12 @@ class JsPathResolver:
         self.valid_extensions = settings.get('valid_extensions', {})[lang]
         self.proj_settings = proj_settings
         self.vendor_dirs = settings.get('vendor_dirs', {})[lang];
-        self.aliases = settings.get('aliases',{})[lang]
+
+        self.aliases = settings.get('aliases', {})[lang]
+        proj_aliases = proj_settings.get('aliases', {})[lang]
+        for alias in proj_aliases:
+            self.aliases[alias] = proj_aliases[alias]
+
         self.matchingRoots = [root for root in self.roots if self.current_dir.startswith(root)]
         self.currentRoot = self.matchingRoots[0] if self.matchingRoots else self.current_dir
         self.lookup_paths = self.proj_settings.get('lookup_paths', {}).get(lang, False) or settings.get('lookup_paths', {}).get(lang, False) or []
