@@ -58,6 +58,10 @@
     "twig": [
       "HTML (Twig).tmLanguage",
       "Craft-Twig.tmLanguage"
+    ],
+    "dart": [
+      "Dart.sublime-syntax",
+      "Dart.tmLanguage"
     ]
   },
   "import_line_regex": {
@@ -124,6 +128,10 @@
       "^{%\\s+use\\s+['\"](.+)['\"].*?%}$",
       "^{%\\s+.+?\\s+with\\s+['\"](.+)['\"].*?%}$",
       "^{{\\s+include\\(['\"](.+)['\"].*?$"
+    ],
+    "dart": [
+      "^import\\s+['\"](.+)['\"].*?;$",
+      "^export\\s+['\"](.+)['\"].*?;$",
     ]
   },
   "valid_extensions": {
@@ -140,7 +148,8 @@
     "sugarml": ["sgr"],
     "nunjucks": ["njk", "nunjucks", "njs", "html"],
     "jinja2": ["j2"],
-    "twig": ["twig"]
+    "twig": ["twig"],
+    "dart": ["dart"]
   },
   "default_filenames": {
     "js": ["index"]
