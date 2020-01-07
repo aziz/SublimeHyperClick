@@ -47,17 +47,17 @@ class JsPathResolver:
         self.proj_settings = proj_settings
         self.vendor_dirs = settings.get('vendor_dirs', {})[lang];
 
-        self.aliases = settings.get('aliases', {})[lang]
-        proj_aliases = proj_settings.get('aliases', {})[lang]
-        for alias in proj_aliases:
-            self.aliases[alias] = proj_aliases[alias]
+        self.aliases = settings.get('aliases', {}).get(lang, {})
+        self.proj_aliases = proj_settings.get('aliases', {}).get(lang, {})
+        for alias in self.proj_aliases:
+            self.aliases[alias] = self.proj_aliases[alias]
 
         self.matchingRoots = [root for root in self.roots if self.current_dir.startswith(root)]
         self.currentRoot = self.matchingRoots[0] if self.matchingRoots else self.current_dir
         self.lookup_paths = self.proj_settings.get('lookup_paths', {}).get(lang, False) or settings.get('lookup_paths', {}).get(lang, False) or []
 
     def resolve(self):
-        # Resolve by global aliases
+        # Resolve by aliases
         for alias, alias_source in self.aliases.items():
             result = self.resolve_from_alias(alias, alias_source)
             if result:
