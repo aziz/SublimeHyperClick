@@ -4,6 +4,7 @@ import sublime
 import re
 from .hyper_click.path_resolver import HyperClickPathResolver
 import webbrowser
+from os import path
 
 
 class HyperClickJumpCommand(sublime_plugin.TextCommand):
@@ -13,7 +14,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         self.view = view
         self.settings = sublime.load_settings('hyper_click.sublime-settings')
         self.window = view.window()
-        self.syntax = self.view.settings().get('syntax')
+        self.syntax = path.normpath(self.view.settings().get('syntax'))
         self.lang = self.get_lang(self.syntax)
 
     def run(self, edit):
@@ -59,7 +60,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         supported_syntaxes = self.settings.get('supported_syntaxes')
         for (lang, syntax_names) in supported_syntaxes.items():
             for syn in syntax_names:
-                if self.syntax.endswith(syn):
+                if self.syntax.endswith('/' + syn):
                     return lang
         return ''
 
