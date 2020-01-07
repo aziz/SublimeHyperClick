@@ -59,7 +59,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         supported_syntaxes = self.settings.get('supported_syntaxes')
         for (lang, syntax_names) in supported_syntaxes.items():
             for syn in syntax_names:
-                if self.syntax.endswith('/' + syn) or self.syntax.endswith('\\' + syn):
+                if self.syntax.endswith('/' + syn):
                     return lang
         return ''
 

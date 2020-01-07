@@ -20,8 +20,8 @@ if ST3118:
             if not annotations_enabled:
                 return False
             supported_syntaxes = plugin_settings.get('supported_syntaxes')
-            aggregated_systaxes = list(chain.from_iterable(supported_syntaxes.values()))
-            for s in aggregated_systaxes:
+            aggregated_syntaxes = list(chain.from_iterable(supported_syntaxes.values()))
+            for s in aggregated_syntaxes:
                 if syntax.endswith(s):
                     return True
             return False
@@ -46,7 +46,7 @@ if ST3118:
             supported_syntaxes = self.settings.get('supported_syntaxes')
             for (lang, syntax_names) in supported_syntaxes.items():
                 for syn in syntax_names:
-                    if self.syntax.endswith(syn):
+                    if self.syntax.endswith('/' + syn):
                         return lang
             return ''
 
@@ -85,7 +85,6 @@ if ST3118:
                 self.current_line = v.line(line_range.b)
                 v.erase_phantoms('hyper_click')
                 resolved_path = file_path.resolve()
-                # print('resolved to => ', resolved_path)
                 if resolved_path:
                     content = """
                         <span class="label label-success"><a href="{link}">{content}</a></span>

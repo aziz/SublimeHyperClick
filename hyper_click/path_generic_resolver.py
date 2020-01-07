@@ -7,15 +7,13 @@ class GenericPathResolver:
     def __init__(self, str_path, current_dir, roots, lang, settings, proj_settings):
         self.str_path = str_path
         self.current_dir = current_dir
-        self.lang = lang
-        self.settings = settings
-        self.roots = roots
         self.valid_extensions = settings.get('valid_extensions', {})[lang]
-        self.proj_settings = proj_settings
-
-        self.matching_root = [root for root in self.roots if self.current_dir.startswith(root)]
-        self.current_root = self.matching_root[0] if self.matching_root else self.current_dir
-        self.lookup_paths = self.proj_settings.get('lookup_paths', {}).get(lang, False) or settings.get('lookup_paths', {}).get(lang, False) or []
+        proj_aliases = proj_settings.get('aliases', {}).get(lang, {})
+        self.aliases = settings.get('aliases', {}).get(lang, {})
+        self.aliases.update(proj_aliases)
+        matching_roots = [root for root in roots if self.current_dir.startswith(root)]
+        self.current_root = matching_roots[0] if matching_roots else self.current_dir
+        self.lookup_paths = proj_settings.get('lookup_paths', {}).get(lang, []) + settings.get('lookup_paths', {}).get(lang, [])
 
     def resolve(self):
         combined = path.realpath(path.join(self.current_dir, self.str_path))
@@ -29,6 +27,13 @@ class GenericPathResolver:
         result = self.resolve_in_lookup_paths(self.str_path)
         if result:
             return result
+
+        # Resolve by alias
+        # match 'Styles/variables/palette' to 'src/less/variables/palette.less'
+        for alias, alias_source in self.aliases.items():
+            result = self.resolve_from_alias(alias, alias_source)
+            if result:
+                return result
 
         # Loop all allowed extensions, and try matching those
         # match '../variables/palette' to '../variables/palette.less'
@@ -48,6 +53,14 @@ class GenericPathResolver:
             result = self.resolve_relative_to_dir(target, path.join(self.current_root, lookup_path))
             if result:
                 return result
+
+    def resolve_from_alias(self, alias, alias_source):
+        path_parts = path.normpath(self.str_path).split(path.sep)
+
+        if path_parts[0] == alias:
+            path_parts[0] = alias_source
+
+            return self.resolve_relative_to_dir(path.join(*path_parts), self.current_root)
 
     def resolve_as_file(self, path_name):
         if path.isfile(path_name):

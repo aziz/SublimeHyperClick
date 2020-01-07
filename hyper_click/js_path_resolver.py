@@ -3,11 +3,7 @@ import json
 from os import path, walk
 from bisect import bisect_left
 
-NODE_CORE_MODULES = sorted(["assert", "buffer", "child_process", "cluster", "console", "constants",
-                     "crypto", "dgram", "dns", "domain", "events", "fs", "http", "https",
-                     "module", "net", "os", "path", "process", "punycode", "querystring",
-                     "readline", "repl", "stream", "string_decoder", "sys", "timers", "tls",
-                     "tty", "url", "util", "v8", "vm", "zlib"])
+NODE_CORE_MODULES = sorted(['assert', 'async_hooks', 'buffer', 'child_process', 'cluster', 'console', 'constants', 'crypto', 'dgram', 'dns', 'domain', 'events', 'fs', 'http', 'http2', 'https', 'module', 'net', 'os', 'path', 'perf_hooks', 'process', 'punycode', 'querystring', 'readline', 'repl', 'stream', 'string_decoder', 'sys', 'timers', 'tls', 'trace_events', 'tty', 'url', 'util', 'v8', 'vm', 'wasi', 'worker_threads', 'zlib'])
 
 NODE_CORE_MODULES_TEMPLATE = "https://github.com/nodejs/node/blob/master/lib/{}.js"
 
@@ -40,26 +36,16 @@ class JsPathResolver:
     def __init__(self, str_path, current_dir, roots, lang, settings, proj_settings):
         self.str_path = str_path
         self.current_dir = current_dir
-        self.lang = lang
-        self.settings = settings
-        self.roots = roots
         self.valid_extensions = settings.get('valid_extensions', {})[lang]
-        self.proj_settings = proj_settings
-        self.vendor_dirs = settings.get('vendor_dirs', {})[lang]
-        self.proj_aliases = proj_settings.get('aliases', {}).get(lang, {})
+        self.vendor_dirs = settings.get('vendor_dirs', {}).get(lang, [])
+        proj_aliases = proj_settings.get('aliases', {}).get(lang, {})
         self.aliases = settings.get('aliases', {}).get(lang, {})
-        self.aliases.update(self.proj_aliases)
-        self.matchingRoots = [root for root in self.roots if self.current_dir.startswith(root)]
-        self.currentRoot = self.matchingRoots[0] if self.matchingRoots else self.current_dir
-        self.lookup_paths = self.proj_settings.get('lookup_paths', {}).get(lang, False) or settings.get('lookup_paths', {}).get(lang, False) or []
+        self.aliases.update(proj_aliases)
+        matching_roots = [root for root in roots if self.current_dir.startswith(root)]
+        self.current_root = matching_roots[0] if matching_roots else self.current_dir
+        self.lookup_paths = proj_settings.get('lookup_paths', {}).get(lang, []) + settings.get('lookup_paths', {}).get(lang, [])
 
     def resolve(self):
-        # Resolve by aliases
-        for alias, alias_source in self.aliases.items():
-            result = self.resolve_from_alias(alias, alias_source)
-            if result:
-                return result
-
         # Core modules
         if find_index(NODE_CORE_MODULES, self.str_path) != -1:
             return NODE_CORE_MODULES_TEMPLATE.format(self.str_path)
@@ -71,6 +57,12 @@ class JsPathResolver:
 
         if self.str_path.startswith('./') or self.str_path.startswith('../') or context_dir == '/':
             result = self.resolve_relative_to_dir(self.str_path, context_dir)
+            if result:
+                return result
+
+        # Resolve by aliases
+        for alias, alias_source in self.aliases.items():
+            result = self.resolve_from_alias(alias, alias_source)
             if result:
                 return result
 
@@ -88,14 +80,14 @@ class JsPathResolver:
         if path_parts[0] == alias:
             path_parts[0] = alias_source
 
-            return self.resolve_relative_to_dir(path.join(*path_parts), self.currentRoot)
+            return self.resolve_relative_to_dir(path.join(*path_parts), self.current_root)
 
     def resolve_relative_to_dir(self, target, directory):
         combined = path.realpath(path.join(directory, target))
         return self.resolve_as_file(combined) or self.resolve_as_directory(combined)
 
     def resolve_node_modules(self, target, start_dir):
-        for vendor_path in walkup_dir(start_dir, self.vendor_dirs, self.currentRoot):
+        for vendor_path in walkup_dir(start_dir, self.vendor_dirs, self.current_root):
             lookup_path = path.join(vendor_path, target)
             result = self.resolve_as_file(lookup_path)
             if result:
@@ -106,7 +98,7 @@ class JsPathResolver:
 
     def resolve_in_lookup_paths(self, target):
         for lookup_path in self.lookup_paths:
-            result = self.resolve_relative_to_dir(target, path.join(self.currentRoot, lookup_path))
+            result = self.resolve_relative_to_dir(target, path.join(self.current_root, lookup_path))
             if result:
                 return result
 
