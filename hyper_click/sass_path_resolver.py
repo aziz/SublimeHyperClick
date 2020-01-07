@@ -11,12 +11,9 @@ class SassPathResolver:
         self.roots = roots
         self.valid_extensions = settings.get('valid_extensions', {})[lang]
         self.proj_settings = proj_settings
-
-        self.aliases = settings.get('aliases', {}).get(lang, {})
         self.proj_aliases = proj_settings.get('aliases', {}).get(lang, {})
-        for alias in self.proj_aliases:
-            self.aliases[alias] = self.proj_aliases[alias]
-
+        self.aliases = settings.get('aliases', {}).get(lang, {})
+        self.aliases.update(self.proj_aliases)
         self.matchingRoots = [root for root in self.roots if self.current_dir.startswith(root)]
         self.currentRoot = self.matchingRoots[0] if self.matchingRoots else self.current_dir
         self.lookup_paths = self.proj_settings.get('lookup_paths', {}).get(lang, False) or settings.get('lookup_paths', {}).get(lang, False) or []
