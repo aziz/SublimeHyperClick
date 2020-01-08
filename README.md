@@ -4,7 +4,7 @@ The missing part of `Go to definition` functionality in Sublime.
 
 ![sublime hyperclick](https://cloud.githubusercontent.com/assets/3202/19578519/51558bb4-971c-11e6-8ef2-d256da53d1da.gif)
 
-When you are navigating and reading a code-base, you need to jump between required/imported/included files.
+When you are navigating and reading a codebase, you need to jump between required/imported/included files.
 
 HyperClick detects references to these files and lets you jump right to them, by pressing a key or clicking on an icon next to the filename.
 
@@ -14,6 +14,8 @@ Unlike Sublime Text's `Goto Definition`, HyperClick knows some specifics of the 
 
 - JavaScript
 - TypeScript
+- Vue components
+- Svelte components
 - CSS
 - Sass and SCSS
 - LESS
@@ -33,29 +35,26 @@ Unlike Sublime Text's `Goto Definition`, HyperClick knows some specifics of the 
 If you'd like to request another language, [open an issue](https://github.com/aziz/SublimeHyperClick/issues) with an example project in that language.
 
 ## Installation
-You can install HyperClick via [Sublime Package Control](https://packagecontrol.io/)
-
-Or clone this repo into your SublimeText Packages directory and rename it to `HyperClick`
+You can install HyperClick via [Sublime Package Control](https://packagecontrol.io/).
 
 ## Usage
 
-HyperClick gives you four different ways to navigate, that you can choose based on your preference.
+HyperClick gives you three different ways to navigate:
 
-### 1. Phantoms on hover (Sublime >= 3118)
-If you are using the most recent build of sublime, you can just hover over the required line and an arrow button will appear at the end of line that you can click and navigate to the destination file. See gif animation file above.
+### 1. Green arrows to the right of _imports_
+In Sublime Text 3, you can jump to the file by clicking the arrow to the right of the filename.
 
-### 2. Phantoms on cursor line (Sublime >= 3118)
-Having your cursor on a required/imported line will also show the navigation button, just like hovering over the line.
+This arrow shows up when you **hover your mouse cursor** or **move to the line** (with up/down keys, or Goto Line) that contains the filename.
 
-### 3. Context Menu
+### 2. Context Menu
 If you right click on a required/imported line you'll get a `Jump To Source File ➜` menu item on the context menu.
 
 <img width="748" alt="sublimehyperclickcontext" src="https://cloud.githubusercontent.com/assets/3202/19578923/480cacde-971e-11e6-9504-91c26737c486.png">
 
-### 4. Shortcut key
-By default, HyperClick uses `F12` (Sublime's default `Go to definition`) shortcut.
+### 3. Shortcut key
+By default, HyperClick uses <kbd>F12</kbd> (Sublime's default `Go to definition`) shortcut.
 
-This does not override the default functionality since it's only using it in contexts that Sublime's own `Go to definition` can not help you navigate.
+This does not override the default functionality since it's only using it in contexts that Sublime's own `Go to definition` cannot help you navigate.
 
 You can still customize the shortcut by adding this code to your own key-binding settings.
 
