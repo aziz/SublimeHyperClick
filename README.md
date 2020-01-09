@@ -110,7 +110,7 @@ If the `Settings` option is grayed out, choose the option `Save Project As...` (
 		"hyper_click": {
 			"aliases": {
 				"js": {
-					"@/": "src/"
+					"@": "src"
 				}
 			},
 			"lookup_paths": {
@@ -141,7 +141,7 @@ HyperClick will recognize it as the file `src/components/Toolbar.vue` in your pr
 Tools that support aliases:
 
 - [Webpack](https://webpack.js.org/configuration/resolve/#resolvealias)
-- [vue-cli](https://cli.vuejs.org/guide/html-and-static-assets.html#url-transform-rules) comes with `@/` aliased to `src/` by default
+- [vue-cli](https://cli.vuejs.org/guide/html-and-static-assets.html#url-transform-rules) comes with `@` aliased to `src` by default
 - [Rollup](https://github.com/rollup/plugins/tree/master/packages/alias)
 - [Parcel](https://parceljs.org/module_resolution.html#aliases)
 
