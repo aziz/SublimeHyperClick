@@ -86,6 +86,66 @@ HyperClick uses a greenish button with `➜` when it finds the destination file 
 #### Default Settings
 See [hyper_click.sublime-settings](https://github.com/aziz/SublimeHyperClick/blob/master/hyper_click.sublime-settings) for up to date settings.
 
+## Project settings
+
+Some languages and build tools let developers reference files without writing out the full path to the file.
+
+You can use [project settings](https://www.sublimetext.com/docs/3/projects.html) to configure HyperClick to look for files at specific dirs, though the settings `"lookup_paths"` and `"aliases"`.
+
+To open the project settings file, go to `Project > Settings`.
+
+If the `Settings` option is grayed out, choose the option `Save Project As...` (right above it) to save it to disk. The `Settings` option can now be clicked.
+
+#### Project settings example
+
+```json
+{
+	"folders":
+	[
+		{
+			"path": "/computer/jane/projects/a-great-app"
+		}
+	],
+	"settings": {
+		"hyper_click": {
+			"aliases": {
+				"js": {
+					"@/": "src/"
+				}
+			},
+			"lookup_paths": {
+				"twig": [
+					"templates"
+				]
+			}
+		}
+	}
+}
+```
+
+#### Lookup paths
+
+When an imported file can't be found inside the same directory as the file, HyperClick will search inside the directories set in `"lookup_paths"`.
+
+#### Aliases
+
+An alias is a character or word at the start of the filename that maps to a fixed directory location inside the project.
+
+Here's an example: by default, [vue-cli](https://cli.vuejs.org) uses `@` as an alias to the directory `src` inside the project. When you write
+```js
+import Toolbar from '@/components/Toolbar';
+```
+
+HyperClick will recognize it as the file `src/components/Toolbar.vue` in your project.
+
+Tools that support aliases:
+
+- [Webpack](https://webpack.js.org/configuration/resolve/#resolvealias)
+- [vue-cli](https://cli.vuejs.org/guide/html-and-static-assets.html#url-transform-rules) comes with `@/` aliased to `src/` by default
+- [Rollup](https://github.com/rollup/plugins/tree/master/packages/alias)
+- [Parcel](https://parceljs.org/module_resolution.html#aliases)
+
+
 ## License
 Copyright 2016-2017 [Allen Bargi](https://twitter.com/aziz).
 
