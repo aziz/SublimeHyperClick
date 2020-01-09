@@ -96,7 +96,7 @@ To open the project settings file, go to `Project > Settings`.
 
 If the `Settings` option is grayed out, choose the option `Save Project As...` (right above it) to save it to disk. The `Settings` option can now be clicked.
 
-#### Project settings example
+### Project settings example
 
 ```json
 {
@@ -123,11 +123,11 @@ If the `Settings` option is grayed out, choose the option `Save Project As...` (
 }
 ```
 
-#### Lookup paths
+### Lookup paths
 
 When an imported file can't be found inside the same directory as the file, HyperClick will search inside the directories set in `"lookup_paths"`.
 
-#### Aliases
+### Aliases
 
 An alias is a character or word at the start of the filename that maps to a fixed directory location inside the project.
 
