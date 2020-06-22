@@ -13,12 +13,11 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         self.view = view
         self.settings = sublime.load_settings('hyper_click.sublime-settings')
         self.window = view.window()
-        self.syntax = self.view.settings().get('syntax')
-        self.lang = self.get_lang(self.syntax)
 
     def run(self, edit):
         self.window = self.view.window()
         v = self.view
+        lang = self.get_lang()
 
         if len(v.sel()) != 1:
             return
@@ -31,12 +30,12 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         cursor = v.sel()[0].a
         line_range = v.line(cursor)
         line_content = v.substr(line_range).strip()
-        matched = self.is_valid_line(line_content)
+        matched = self.is_valid_line(lang, line_content)
         if matched:
             destination_str = matched.group(1)
             file_path = HyperClickPathResolver(
                 v, destination_str,
-                self.roots, self.lang, self.settings,
+                self.roots, lang, self.settings,
                 self.proj_settings
             )
             resolved_path = file_path.resolve()
@@ -46,20 +45,22 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
                 else:
                     self.window.open_file(resolved_path)
 
-    def is_valid_line(self, line_content):
+    def is_valid_line(self, lang, line_content):
         import_lines = self.settings.get('import_line_regex', {})
-        for regex_str in import_lines.get(self.lang, []):
+        for regex_str in import_lines.get(lang, []):
             pattern = re.compile(regex_str)
             matched = pattern.match(line_content)
             if matched:
                 return matched
         return False
 
-    def get_lang(self, syntax):
+    def get_lang(self):
+        syntax = self.view.settings().get('syntax') or ''
+
         supported_syntaxes = self.settings.get('supported_syntaxes')
         for (lang, syntax_names) in supported_syntaxes.items():
             for syn in syntax_names:
-                if self.syntax.endswith('/' + syn):
+                if syntax.endswith('/' + syn):
                     return lang
         return ''
 
@@ -72,13 +73,10 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         cursor = v.sel()[0]
         line_range = v.line(cursor)
         line_content = v.substr(line_range).strip()
-        matched = self.is_valid_line(line_content)
+        matched = self.is_valid_line(self.get_lang(), line_content)
         if matched:
             return True
         return False
 
     def is_visible(self):
-        if len(self.lang) == 0:
-            return False
-        else:
-            return self.is_enabled()
+        return self.get_lang() != '' and self.is_enabled()
