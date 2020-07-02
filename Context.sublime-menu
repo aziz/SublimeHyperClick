@@ -1,6 +1,6 @@
 [
     {
-        "caption": "Jump To Source File",
+        "caption": "Goto File",
         "command": "hyper_click_jump",
     }
 ]
