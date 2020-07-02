@@ -65,6 +65,10 @@
     "dart": [
       "Dart.sublime-syntax",
       "Dart.tmLanguage"
+    ],
+    "smarty": [
+      "Smarty.sublime-syntax",
+      "Smarty.tmLanguage"
     ]
   },
   "import_line_regex": {
@@ -135,6 +139,9 @@
     "dart": [
       "^import\\s+['\"](.+)['\"].*?;$",
       "^export\\s+['\"](.+)['\"].*?;$",
+    ],
+    "smarty": [
+      "^\\s*{include\\s+file=['\"](.+)['\"].*?}$"
     ]
   },
   "valid_extensions": {
@@ -152,7 +159,8 @@
     "nunjucks": ["njk", "nunjucks", "njs", "html"],
     "jinja2": ["j2"],
     "twig": ["twig"],
-    "dart": ["dart"]
+    "dart": ["dart"],
+    "smarty": ["smarty"]
   },
   "default_filenames": {
     "js": ["index"]
