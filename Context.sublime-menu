@@ -1,8 +1,6 @@
 [
-    { "caption": "-" },
     {
-        "caption": "Jump To Source File ➜",
+        "caption": "Jump To Source File",
         "command": "hyper_click_jump",
-    },
-    { "caption": "-"}
+    }
 ]
