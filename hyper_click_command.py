@@ -6,6 +6,15 @@ from .hyper_click.path_resolver import HyperClickPathResolver
 import webbrowser
 
 
+def get_cursor(view, event=None):
+    if event:
+        vector = (event['x'], event['y'])
+        point = view.window_to_text(vector)
+        return sublime.Region(point)
+    else:
+        return view.sel()[0]
+
+
 class HyperClickJumpCommand(sublime_plugin.TextCommand):
 
     def __init__(self, view):
@@ -14,7 +23,10 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         self.settings = sublime.load_settings('hyper_click.sublime-settings')
         self.window = view.window()
 
-    def run(self, edit):
+    def want_event(self):
+        return True
+
+    def run(self, edit, event=None):
         self.window = self.view.window()
         v = self.view
         lang = self.get_lang()
@@ -27,7 +39,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         # Per-project settings are optional
         self.proj_settings = self.view.settings().get('hyper_click', {})
 
-        cursor = v.sel()[0].a
+        cursor = get_cursor(v, event).a
         line_range = v.line(cursor)
         line_content = v.substr(line_range).strip()
         matched = self.is_valid_line(lang, line_content)
@@ -64,13 +76,13 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
                     return lang
         return ''
 
-    def is_enabled(self):
+    def is_enabled(self, event=None):
         v = self.view
+        cursor = get_cursor(v, event)
 
-        if not (len(v.sel()) == 1 and v.sel()[0].empty()):
+        if not (len(v.sel()) == 1 and cursor.empty()):
             return False
 
-        cursor = v.sel()[0]
         line_range = v.line(cursor)
         line_content = v.substr(line_range).strip()
         matched = self.is_valid_line(self.get_lang(), line_content)
@@ -78,5 +90,5 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
             return True
         return False
 
-    def is_visible(self):
-        return self.get_lang() != '' and self.is_enabled()
+    def is_visible(self, event=None):
+        return self.get_lang() != '' and self.is_enabled(event)
