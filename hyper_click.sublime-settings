@@ -1,190 +1,146 @@
 {
-  "supported_syntaxes": {
-    "js": [
-      "ecmascript.sublime-syntax",
-      "JavaScript.sublime-syntax",
-      "JavaScript (Babel).sublime-syntax",
-      "JavaScriptNext.tmLanguage",
-      "JavaScript.tmLanguage",
-      "naomi.fjsx15.sublime-syntax",
-      "naomi.jsx1.sublime-syntax",
-      "Vue Component.sublime-syntax",
-      "TypeScript.tmLanguage",
-      "TypeScriptReact.tmLanguage",
-      "Svelte.sublime-syntax"
-    ],
-    "sass": [
-      "SCSS.sublime-syntax",
-      "Sass.sublime-syntax",
-      "SCSS.tmLanguage",
-      "Sass.tmLanguage"
-    ],
-    "less": [
-      "LESS.tmLanguage",
-      "LESS.sublime-syntax"
-    ],
-    "php": [
-      "PHP.sublime-syntax",
-      "PHP Source.sublime-syntax"
-    ],
-    "stylus": [
-      "Stylus.tmLanguage"
-    ],
-    "html": [
-      "HTML.sublime-syntax"
-    ],
-    "jstl": [
-      "jstl.tmLanguage"
-    ],
-    "css": [
-      "CSS.sublime-syntax",
-      "PostCSS.tmLanguage"
-    ],
-    "pug": [
-      "Pug.tmLanguage"
-    ],
-    "sugarss": [
-      "Sss.tmLanguage",
-      "SugarSS.tmLanguage"
-    ],
-    "sugarml": [
-      "SugarML.tmLanguage"
-    ],
-    "nunjucks": [
-      "Nunjucks.tmLanguage",
-      "Nunjucks.sublime-syntax",
-      "HTML(Nunjucks).sublime-syntax"
-    ],
-    "jinja2": [
-      "Jinja2.tmLanguage"
-    ],
-    "twig": [
-      "HTML (Twig).tmLanguage",
-      "Craft-Twig.tmLanguage"
-    ],
-    "dart": [
-      "Dart.sublime-syntax",
-      "Dart.tmLanguage"
-    ],
-    "smarty": [
-      "Smarty.sublime-syntax",
-      "Smarty.tmLanguage"
-    ]
-  },
-  "import_line_regex": {
-    "js": [
-      "^import\\s+['\"](.+)['\"];?$",
-      ".*from\\s+['\"](.+)['\"];?$",
-      ".*require\\(['\"](.+?)['\"]\\).*",
-      ".*import\\((?:\\/\\*.+?\\*\\/\\s+)?['\"](.+)['\"]\\)(?:[;\\.,])?",
-    ],
-    "sass": [
-      "^@import\\s+['\"](.+)['\"];?$"
-    ],
-    "less": [
-      "^@import\\s+\\(?.*\\)?\\s*['\"](.+)['\"];?$"
-    ],
-    "php": [
-      "\\binclude\\s*\\(?['\"](.+)['\"]\\)?;?$",
-      "\\binclude_once\\s*\\(?['\"](.+)['\"]\\)?;?$",
-      "\\brequire\\s*\\(?['\"](.+)['\"]\\)?;?$",
-      "\\brequire_once\\s*\\(?['\"](.+)['\"]\\)?;?$"
-    ],
-    "stylus": [
-      "^@import\\s+['\"](.+)['\"];?$"
-    ],
-    "html": [
-      ".*?<link\\s+rel=\"import\"\\s+href=['\"](.+)['\"]/?>.*?"
-    ],
-    "jstl": [
-      "(<([\\w-]*)\\:([\\w-]*))",
-    ],
-    "css": [
-      "^@import\\s+['\"](.+)['\"].*?;$",
-      "^@import\\s+url\\(['\"](.+)['\"]\\).*?;$"
-    ],
-    "pug": [
-      "^include\\s+(.+)$",
-      "^extends\\s+(.+)$"
-    ],
-    "sugarss": [
-      "^@import\\s+['\"](.+)['\"]$"
-    ],
-    "sugarml": [
-      "^include\\(src=['\"]\/?(.+)['\"]\\)$",
-      "^extends\\(src=['\"]\/?(.+)['\"]\\)$",
-    ],
-    "nunjucks": [
-      "^{%\\s+extends\\s+['\"](.+)['\"].*?%}$",
-      "^{%\\s+include\\s+['\"](.+)['\"].*?%}$",
-      "^{%\\s+import\\s+['\"](.+)['\"].*?%}$",
-      "^{%\\s+from\\s+['\"](.+)['\"]\\s+import.*?%}$"
-    ],
-    "jinja2": [
-      "^{%\\s+extends\\s+['\"](.+)['\"].*?%}$",
-      "^{%\\s+include\\s+['\"](.+)['\"].*?%}$",
-      "^{%\\s+import\\s+['\"](.+)['\"].*?%}$",
-      "^{%\\s+from\\s+['\"](.+)['\"]\\s+import.*?%}$"
-    ],
-    "twig": [
-      "^{%\\s+extends\\s+['\"](.+)['\"].*?%}$",
-      "^{%\\s+include\\s+['\"](.+)['\"].*?%}$",
-      "^{%\\s+import\\s+['\"](.+)['\"].*?%}$",
-      "^{%\\s+from\\s+['\"](.+)['\"]\\s+import.*?%}$",
-      "^{%\\s+embed\\s+['\"](.+)['\"].*?%}$",
-      "^{%\\s+use\\s+['\"](.+)['\"].*?%}$",
-      "^{%\\s+.+?\\s+with\\s+['\"](.+)['\"].*?%}$",
-      "^{{\\s+include\\(['\"](.+)['\"].*?$"
-    ],
-    "dart": [
-      "^import\\s+['\"](.+)['\"].*?;$",
-      "^export\\s+['\"](.+)['\"].*?;$",
-    ],
-    "smarty": [
-      "^.*{include\\s+file=['\"]([^'\"]+)['\"].*?}.*$"
-    ]
-  },
-  "valid_extensions": {
-    "js": ["js", "jsx", "vue", "mjs", "ts", "tsx", "svelte"],
-    "sass": ["scss", "sass"],
-    "less": ["less"],
-    "php": ["php"],
-    "stylus": ["styl", "stylus"],
-    "html": ["html"],
-    "jstl": ["jsp", "tag"],
-    "css": ["css", "pcss", "postcss"],
-    "pug": ["pug", "jade"],
-    "sugarss": ["sss"],
-    "sugarml": ["sgr"],
-    "nunjucks": ["njk", "nunjucks", "njs", "html"],
-    "jinja2": ["j2"],
-    "twig": ["twig"],
-    "dart": ["dart"],
-    "smarty": ["smarty"]
-  },
-  "default_filenames": {
-    "js": ["index"]
-  },
-  "vendor_dirs": {
-    "js": ["node_modules"],
-    "html": ["node_modules", "bower_components"],
-    "jstl": ["WEB-INF"]
-  },
-  "aliases": {
-    "js": {}
-  },
-  "lookup_paths": {
-    "js": [],
-    "jstl": [
-      "taglib *prefix ?= ?[\"'](.*)[\"'] *tagdir ?= ?[\"'](.*)[\"']",
-      "xmlns:(\\w*)=[\"']urn:jsptagdir:(.*?)[\"']"
-    ],
-    "twig": [
-      "templates",
-      "views",
-    ],
-  },
-  "annotation_found_text": "➜",
-  "annotation_not_found_text": "✘",
-  "annotations_enabled": true
+    // Enable and tweak the inline annotations
+    "annotation_found_text": "➜",
+    "annotation_not_found_text": "✘",
+    "annotations_enabled": true,
+
+    // HyperClick is enabled when the current scope matches this selector
+    "selector": "source.js,source.sass,source.scss,source.less,embedding.php,source.stylus,text.html,source.jstl,source.css,source.pug,source.sugarss,text.sugarml,source.nunjucks,source.jinja2,text.html.twig,source.dart,text.html.smarty",
+
+    // Supported languages
+    // - each has at least a regex to match import statements
+    // - to support import statements without file extions, specify a list of valid extensions
+    // - for some languages we support imports from vendor directories, e.g. node_modules
+    // - aliases map something short in the import statement (e.g. "@") to a path in your project
+    // - HyperClick will also search in lookup_paths, which is particularly useful in project settings
+    "scopes": {
+        "source.js": {
+            "regexes": [
+                "^import\\s+['\"](.+)['\"];?$",
+                ".*from\\s+['\"](.+)['\"];?$",
+                ".*require\\(['\"](.+?)['\"]\\).*",
+                ".*import\\((?:\\/\\*.+?\\*\\/\\s+)?['\"](.+)['\"]\\)(?:[;\\.,])?",
+            ],
+            "extensions": ["js", "jsx", "vue", "mjs", "ts", "tsx", "svelte"],
+            "vendor_dirs": ["node_modules"],
+            "aliases": {}
+        },
+        "source.sass": {
+            "regexes": [
+                "^@import\\s+['\"](.+)['\"];?$"
+            ],
+            "extensions": ["scss", "sass"]
+        },
+        "source.less": {
+            "regexes": [
+                "^@import\\s+\\(?.*\\)?\\s*['\"](.+)['\"];?$"
+            ],
+            "extensions": ["less"]
+        },
+        "embedding.php": {
+            "regexes": [
+                "\\binclude\\s*\\(?['\"](.+)['\"]\\)?;?$",
+                "\\binclude_once\\s*\\(?['\"](.+)['\"]\\)?;?$",
+                "\\brequire\\s*\\(?['\"](.+)['\"]\\)?;?$",
+                "\\brequire_once\\s*\\(?['\"](.+)['\"]\\)?;?$"
+            ],
+            "extensions": ["php"]
+        },
+        "source.stylus": {
+            "regexes": [
+                "^@import\\s+['\"](.+)['\"];?$"
+            ],
+            "extensions": ["styl", "stylus"]
+        },
+        "text.html.basic": {
+            "regexes": [
+                ".*?<link\\s+rel=\"import\"\\s+href=['\"](.+)['\"]/?>.*?"
+            ],
+            "extensions": ["html"],
+            "vendor_dirs": ["node_modules", "bower_components"]
+        },
+        "text.html.jstl": {
+            "regexes": [
+                "(<([\\w-]*)\\:([\\w-]*))",
+            ],
+            "extensions": ["jsp", "tag"],
+            "jstl": ["WEB-INF"],
+            "lookup_paths": [
+                "taglib *prefix ?= ?[\"'](.*)[\"'] *tagdir ?= ?[\"'](.*)[\"']",
+                "xmlns:(\\w*)=[\"']urn:jsptagdir:(.*?)[\"']"
+            ]
+        },
+        "source.css": {
+            "regexes": [
+                "^@import\\s+['\"](.+)['\"].*?;$",
+                "^@import\\s+url\\(['\"](.+)['\"]\\).*?;$"
+            ],
+            "extensions": ["css", "pcss", "postcss"]
+        },
+        "text.pug": {
+            "regexes": [
+                "^include\\s+(.+)$",
+                "^extends\\s+(.+)$"
+            ],
+            "extensions": ["pug", "jade"]
+        },
+        "source.sss": {
+            "regexes": [
+                "^@import\\s+['\"](.+)['\"]$"
+            ],
+            "extensions": ["sss"]
+        },
+        "source.sugarml": {
+            "regexes": [
+                "^include\\(src=['\"]\/?(.+)['\"]\\)$",
+                "^extends\\(src=['\"]\/?(.+)['\"]\\)$",
+            ],
+            "extensions": ["sgr"]
+        },
+        "text.html.nunjucks": {
+            "regexes": [
+                "^{%\\s+extends\\s+['\"](.+)['\"].*?%}$",
+                "^{%\\s+include\\s+['\"](.+)['\"].*?%}$",
+                "^{%\\s+import\\s+['\"](.+)['\"].*?%}$",
+                "^{%\\s+from\\s+['\"](.+)['\"]\\s+import.*?%}$"
+            ],
+            "extensions": ["njk", "nunjucks", "njs", "html"]
+        },
+        "source.jinja2": {
+            "regexes": [
+                "^{%\\s+extends\\s+['\"](.+)['\"].*?%}$",
+                "^{%\\s+include\\s+['\"](.+)['\"].*?%}$",
+                "^{%\\s+import\\s+['\"](.+)['\"].*?%}$",
+                "^{%\\s+from\\s+['\"](.+)['\"]\\s+import.*?%}$"
+            ],
+            "extensions": ["j2"]
+        },
+        "text.html.twig": {
+            "regexes": [
+                "^{%\\s+extends\\s+['\"](.+)['\"].*?%}$",
+                "^{%\\s+include\\s+['\"](.+)['\"].*?%}$",
+                "^{%\\s+import\\s+['\"](.+)['\"].*?%}$",
+                "^{%\\s+from\\s+['\"](.+)['\"]\\s+import.*?%}$",
+                "^{%\\s+embed\\s+['\"](.+)['\"].*?%}$",
+                "^{%\\s+use\\s+['\"](.+)['\"].*?%}$",
+                "^{%\\s+.+?\\s+with\\s+['\"](.+)['\"].*?%}$",
+                "^{{\\s+include\\(['\"](.+)['\"].*?$"
+            ],
+            "extensions": ["twig"],
+            "lookup_paths": ["templates", "views"]
+        },
+        "source.dart": {
+            "regexes": [
+                "^import\\s+['\"](.+)['\"].*?;$",
+                "^export\\s+['\"](.+)['\"].*?;$",
+            ],
+            "extensions": ["dart"]
+        },
+        "text.html.smarty": {
+            "regexes": [
+                "^.*{include\\s+file=['\"]([^'\"]+)['\"].*?}.*$"
+            ],
+            "extensions": ["smarty"]
+        }
+    }
 }
