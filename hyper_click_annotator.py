@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import sublime_plugin
 import sublime
 import re
@@ -6,142 +5,136 @@ import webbrowser
 from itertools import chain
 from .hyper_click.path_resolver import HyperClickPathResolver
 
-ST3118 = int(sublime.version()) >= 3118
 
-if ST3118:
-    class HyperClickAnnotator(sublime_plugin.ViewEventListener):
-        @classmethod
-        def is_applicable(cls, settings):
-            syntax = settings.get('syntax', None)
-            if not syntax:
-                return False
-            plugin_settings = sublime.load_settings('hyper_click.sublime-settings')
-            annotations_enabled = plugin_settings.get('annotations_enabled')
-            if not annotations_enabled:
-                return False
-            supported_syntaxes = plugin_settings.get('supported_syntaxes')
-            aggregated_syntaxes = list(chain.from_iterable(supported_syntaxes.values()))
-            for s in aggregated_syntaxes:
-                if syntax.endswith(s):
-                    return True
-            return False
+def is_applicable(scope, view):
+    if int(sublime.version()) < 3118:
+        # phantoms are not supported
+        return False
 
-        def __init__(self, view):
-            self.current_line = (-1, -1)
-            self.view = view
-            self.settings = sublime.load_settings('hyper_click.sublime-settings')
-            self.css = sublime.load_resource("Packages/HyperClick/html/ui.css")
-            self.html = sublime.load_resource("Packages/HyperClick/html/ui.html")
+    if not scope:
+        return False
 
-        def is_valid_line(self, line_content):
-            import_lines = self.settings.get('import_line_regex', {})
-            for regex_str in import_lines[self.lang]:
-                pattern = re.compile(regex_str)
-                matched = pattern.match(line_content)
-                if matched:
-                    return matched
-            return False
+    settins = sublime.load_settings('hyper_click.sublime-settings')
+    annotations_enabled = settins.get('annotations_enabled')
+    if not annotations_enabled:
+        return False
 
-        def get_lang(self, syntax):
-            supported_syntaxes = self.settings.get('supported_syntaxes')
-            for (lang, syntax_names) in supported_syntaxes.items():
-                for syn in syntax_names:
-                    if self.syntax.endswith('/' + syn):
-                        return lang
-            return ''
+    selector = settins.get('selector')
+    if view.match_selector(view.sel()[0].a, selector):
+        return True
 
-        def on_navigate(self, url):
-            if url.startswith('http://') or url.startswith('https://'):
-                webbrowser.open_new_tab(url)
-            else:
-                self.window.open_file(url)
+    return False
 
-        def annotate(self, point):
-            self.window = self.view.window()
-            self.roots = self.view.window().folders()
-            self.syntax = self.view.settings().get('syntax')
-            self.lang = self.get_lang(self.syntax)
 
-            # Per-project settings are optional
-            self.proj_settings = self.view.settings().get('hyper_click', {})
+class HyperClickAnnotator(sublime_plugin.EventListener):
 
-            v = self.view
-            line_range = v.line(point)
+    def __init__(self):
+        self.current_line = (-1, -1)
 
-            if v.line(line_range.b) == self.current_line:
-                return
+    def is_valid_line(self, line_content, view):
+        settings = sublime.load_settings('hyper_click.sublime-settings')
+        scopes = settings.get('scopes', {})
+        for selector in scopes:
+            if view.match_selector(view.sel()[0].a, selector):
+                for regex_str in scopes[selector]['regexes']:
+                    pattern = re.compile(regex_str)
+                    matched = pattern.match(line_content)
+                    if matched:
+                        return matched
+        return False
 
-            line_content = v.substr(line_range).strip()
-            matched = self.is_valid_line(line_content)
+    def on_navigate(self, url):
+        if url.startswith('http://') or url.startswith('https://'):
+            webbrowser.open_new_tab(url)
+        else:
+            self.window.open_file(url)
 
-            if matched:
-                destination_str = matched.group(1)
-                file_path = HyperClickPathResolver(
-                    v, destination_str,
-                    self.roots, self.lang, self.settings,
-                    self.proj_settings
+    def annotate(self, point, view):
+        self.window = view.window()
+        self.roots = view.window().folders()
+        self.syntax = view.settings().get('syntax')
+        settings = sublime.load_settings('hyper_click.sublime-settings')
+
+        # Per-project settings are optional
+        self.proj_settings = view.settings().get('hyper_click', {})
+
+        line_range = view.line(point)
+
+        if view.line(line_range.b) == self.current_line:
+            return
+
+        line_content = view.substr(line_range).strip()
+        matched = self.is_valid_line(line_content, view)
+
+        if matched:
+            CSS = sublime.load_resource("Packages/HyperClick/html/ui.css")
+            HTML = sublime.load_resource("Packages/HyperClick/html/ui.html")
+            destination_str = matched.group(1)
+            file_path = HyperClickPathResolver(
+                view,
+                destination_str,
+                self.roots,
+                settings,
+                self.proj_settings
+            )
+            region = sublime.Region(line_range.b, line_range.b)
+            self.current_line = view.line(line_range.b)
+            view.erase_phantoms('hyper_click')
+            resolved_path = file_path.resolve()
+            if resolved_path:
+                content = """
+                    <span class="label label-success"><a href="{link}">{content}</a></span>
+                """.format(
+                    link=resolved_path,
+                    content=settings.get('annotation_found_text', '➜')
                 )
-                region = sublime.Region(line_range.b, line_range.b)
-                self.current_line = v.line(line_range.b)
-                v.erase_phantoms('hyper_click')
-                resolved_path = file_path.resolve()
-                if resolved_path:
-                    content = """
-                        <span class="label label-success"><a href="{link}">{content}</a></span>
-                    """.format(
-                        link=resolved_path,
-                        content=self.settings.get('annotation_found_text', '➜')
-                    )
-                    v.add_phantom(
-                        'hyper_click',
-                        region,
-                        self.html.format(css=self.css, content=content),
-                        sublime.LAYOUT_INLINE, self.on_navigate
-                    )
-                else:
-                    content = """
-                        <span class="label label-error">{content}</span>
-                    """.format(content=self.settings.get('annotation_not_found_text', '✘'))
-                    v.add_phantom(
-                        'hyper_click',
-                        region,
-                        self.html.format(css=self.css, content=content),
-                        sublime.LAYOUT_INLINE, self.on_navigate
-                    )
+                view.add_phantom(
+                    'hyper_click',
+                    region,
+                    HTML.format(css=CSS, content=content),
+                    sublime.LAYOUT_INLINE, self.on_navigate
+                )
             else:
-                self.current_line = (-1, -1)
-                v.erase_phantoms('hyper_click')
+                content = """
+                    <span class="label label-error">{content}</span>
+                """.format(content=settings.get('annotation_not_found_text', '✘'))
+                view.add_phantom(
+                    'hyper_click',
+                    region,
+                    HTML.format(css=CSS, content=content),
+                    sublime.LAYOUT_INLINE, self.on_navigate
+                )
+        else:
+            self.current_line = (-1, -1)
+            view.erase_phantoms('hyper_click')
 
-        # ---------------------------------------
+    # ---------------------------------------
 
-        def on_selection_modified_async(self):
-            v = self.view
+    def on_selection_modified_async(self, view):
+        if view.is_dirty():
+            view.erase_phantoms('hyper_click')
+            return
 
-            if v.is_dirty():
-                v.erase_phantoms('hyper_click')
-                return
+        if len(view.sel()) != 1:
+            view.erase_phantoms('hyper_click')
+            return
 
-            if len(v.sel()) != 1:
-                v.erase_phantoms('hyper_click')
-                return
+        point = view.sel()[0].a
+        self.annotate(point, view)
 
-            point = v.sel()[0].a
-            self.annotate(point)
+    def on_activated_async(self, view):
+        self.on_selection_modified_async(view)
 
-        def on_activated_async(self):
-            self.on_selection_modified_async()
+    def on_deactivated_async(self, view):
+        view.erase_phantoms('hyper_click')
 
-        def on_deactivated_async(self):
-            self.view.erase_phantoms('hyper_click')
+    def on_query_context(self, view, key, operator, operand, match_all):
+        if key == 'hyper_click_jump_line':
+            cursor = view.sel()[0].a
+            line_range = view.line(cursor)
+            line_content = view.substr(line_range).strip()
+            return bool(self.is_valid_line(line_content))
+        return None
 
-        def on_query_context(self, key, operator, operand, match_all):
-            if key == 'hyper_click_jump_line':
-                v = self.view
-                cursor = v.sel()[0].a
-                line_range = v.line(cursor)
-                line_content = v.substr(line_range).strip()
-                return bool(self.is_valid_line(line_content))
-            return None
-
-        def on_hover(self, point, hover_zone):
-            self.annotate(point)
+    def on_hover(self, view, point, hover_zone):
+        self.annotate(point, view)
