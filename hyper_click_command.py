@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import sublime_plugin
 import sublime
 import re
@@ -29,7 +28,6 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
     def run(self, edit, event=None):
         self.window = self.view.window()
         v = self.view
-        lang = self.get_lang()
 
         if len(v.sel()) != 1:
             return
@@ -42,13 +40,14 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         cursor = get_cursor(v, event).a
         line_range = v.line(cursor)
         line_content = v.substr(line_range).strip()
-        matched = self.is_valid_line(lang, line_content)
+        matched = self.is_valid_line(line_content)
         if matched:
             destination_str = matched.group(1)
             file_path = HyperClickPathResolver(
-                v, destination_str,
-                self.roots, lang, self.settings,
-                self.proj_settings
+                v,
+                destination_str,
+                self.roots,
+                self.settings
             )
             resolved_path = file_path.resolve()
             if resolved_path:
@@ -57,38 +56,39 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
                 else:
                     self.window.open_file(resolved_path)
 
-    def is_valid_line(self, lang, line_content):
-        import_lines = self.settings.get('import_line_regex', {})
-        for regex_str in import_lines.get(lang, []):
-            pattern = re.compile(regex_str)
-            matched = pattern.match(line_content)
-            if matched:
-                return matched
+    def is_valid_line(self, line_content):
+        view = self.view
+        scopes = self.settings.get('scopes', {})
+        for selector in scopes:
+            if view.match_selector(view.sel()[0].a, selector):
+                for regex_str in scopes[selector]['regexes']:
+                    pattern = re.compile(regex_str)
+                    matched = pattern.match(line_content)
+                    if matched:
+                        return matched
         return False
 
-    def get_lang(self):
-        syntax = self.view.settings().get('syntax') or ''
-
-        supported_syntaxes = self.settings.get('supported_syntaxes')
-        for (lang, syntax_names) in supported_syntaxes.items():
-            for syn in syntax_names:
-                if syntax.endswith('/' + syn):
-                    return lang
-        return ''
-
     def is_enabled(self, event=None):
-        v = self.view
-        cursor = get_cursor(v, event)
-
-        if not (len(v.sel()) == 1 and cursor.empty()):
+        view = self.view
+        selector = self.settings.get('selector')
+        if not view.match_selector(view.sel()[0].a, selector):
             return False
 
-        line_range = v.line(cursor)
-        line_content = v.substr(line_range).strip()
-        matched = self.is_valid_line(self.get_lang(), line_content)
+        cursor = get_cursor(view, event)
+        if not (len(view.sel()) == 1 and cursor.empty()):
+            return False
+
+        line_range = view.line(cursor)
+        line_content = view.substr(line_range).strip()
+        matched = self.is_valid_line(line_content)
         if matched:
             return True
         return False
 
     def is_visible(self, event=None):
-        return self.get_lang() != '' and self.is_enabled(event)
+        view = self.view
+        selector = self.settings.get('selector')
+        if not view.match_selector(view.sel()[0].a, selector):
+            return False
+        else:
+            return True
