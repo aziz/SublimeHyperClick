@@ -79,3 +79,9 @@ class GenericPathResolver:
     def resolve_as_file(self, path_name):
         if path.isfile(path_name):
             return path_name
+
+        # matching ../index to /index.js
+        for ext in self.valid_extensions:
+            file_path = path_name + '.' + ext
+            if path.isfile(file_path):
+                return file_path
