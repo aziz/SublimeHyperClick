@@ -1,26 +1,28 @@
-# -*- coding: utf-8 -*-
 import re
 from os import path
 
+dirs_regex = [
+    "taglib *prefix ?= ?[\"'](.*)[\"'] *tagdir ?= ?[\"'](.*)[\"']",
+    "xmlns:(\\w*)=[\"']urn:jsptagdir:(.*?)[\"']"
+]
+prog = re.compile('(<([\\w-]*)\\:([\\w-]*))')
 
+# TEMP: hardcoded settings
 class JstlPathResolver:
-    def __init__(self, view, str_lookup, current_dir, roots, lang, settings):
+    def __init__(self, view, str_lookup, current_dir, roots, settings):
         self.view = view
-        self.import_line_regex = settings.get('import_line_regex', {})[lang]
-        prog = re.compile(self.import_line_regex[0])
         regMatch = prog.match(str_lookup)
         self.str_path = regMatch.group(2)
         self.str_file = regMatch.group(3)
         self.current_dir = current_dir
-        self.lang = lang
         self.settings = settings
         self.roots = roots
-        self.valid_extensions = settings.get('valid_extensions', {})[lang]
-        self.dirs_regex = settings.get('lookup_paths', {})[lang]
-        self.vendors = settings.get('vendor_dirs', {})[lang]
+
+        self.valid_extensions = ['jsp', 'tag']
+        self.vendors = ['WEB-INF']
 
     def resolve(self):
-        for regex_str in self.dirs_regex:
+        for regex_str in dirs_regex:
             regions = self.view.find_all(regex_str)
             for region in regions:
                 file_path = self.find_folder(region)
@@ -43,7 +45,7 @@ class JstlPathResolver:
         return ''
 
     def is_valid_line(self, line_content):
-        for regex_str in self.dirs_regex:
+        for regex_str in dirs_regex:
             pattern = re.compile(regex_str)
             matched = pattern.match(line_content)
             if matched:

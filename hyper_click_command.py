@@ -27,24 +27,22 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
 
     def run(self, edit, event=None):
         self.window = self.view.window()
-        v = self.view
+        view = self.view
 
-        if len(v.sel()) != 1:
+        if len(view.sel()) != 1:
             return
 
         # Setting self.roots here (instead of in `__init__`) fixes a bug with files opened through the quick panel
         self.roots = self.window and self.window.folders()
-        # Per-project settings are optional
-        self.proj_settings = self.view.settings().get('hyper_click', {})
 
-        cursor = get_cursor(v, event).a
-        line_range = v.line(cursor)
-        line_content = v.substr(line_range).strip()
+        cursor = get_cursor(view, event).a
+        line_range = view.line(cursor)
+        line_content = view.substr(line_range).strip()
         matched = self.is_valid_line(line_content)
         if matched:
             destination_str = matched.group(1)
             file_path = HyperClickPathResolver(
-                v,
+                view,
                 destination_str,
                 self.roots,
                 self.settings
