@@ -68,27 +68,19 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
                         return matched
         return False
 
-    def is_enabled(self, event=None):
-        view = self.view
-        selector = self.settings.get('selector')
-        if not view.match_selector(view.sel()[0].a, selector):
-            return False
-
-        cursor = get_cursor(view, event)
-        if not (len(view.sel()) == 1 and cursor.empty()):
-            return False
-
-        line_range = view.line(cursor)
-        line_content = view.substr(line_range).strip()
-        matched = self.is_valid_line(line_content)
-        if matched:
-            return True
-        return False
-
     def is_visible(self, event=None):
         view = self.view
         selector = self.settings.get('selector')
         if not view.match_selector(view.sel()[0].a, selector):
             return False
         else:
-            return True
+            cursor = get_cursor(view, event)
+            if not (len(view.sel()) == 1 and cursor.empty()):
+                return False
+
+            line_range = view.line(cursor)
+            line_content = view.substr(line_range).strip()
+            matched = self.is_valid_line(line_content)
+            if matched:
+                return True
+            return False
