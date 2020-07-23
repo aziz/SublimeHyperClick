@@ -50,6 +50,9 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
 
     def annotate(self, point, view):
         self.window = view.window()
+        if not self.window:
+            return
+
         self.roots = view.window().folders()
         self.syntax = view.settings().get('syntax')
         settings = sublime.load_settings('hyper_click.sublime-settings')
