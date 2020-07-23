@@ -2,7 +2,6 @@ import sublime_plugin
 import sublime
 import re
 import webbrowser
-from itertools import chain
 from .hyper_click.path_resolver import HyperClickPathResolver
 
 
