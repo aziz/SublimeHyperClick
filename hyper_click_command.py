@@ -55,6 +55,10 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
                     webbrowser.open_new_tab(resolved_path)
                 else:
                     self.window.open_file(resolved_path)
+                return
+
+        self.window.status_message("File not found")
+
 
     def is_valid_line(self, line_content):
         view = self.view
