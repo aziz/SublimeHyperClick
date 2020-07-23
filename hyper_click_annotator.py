@@ -74,8 +74,7 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
                 view,
                 destination_str,
                 self.roots,
-                settings,
-                self.proj_settings
+                settings
             )
             region = sublime.Region(line_range.b, line_range.b)
             self.current_line = view.line(line_range.b)
