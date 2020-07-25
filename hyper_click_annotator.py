@@ -13,12 +13,12 @@ def is_applicable(scope, view):
     if not scope:
         return False
 
-    settins = sublime.load_settings('hyper_click.sublime-settings')
-    annotations_enabled = settins.get('annotations_enabled')
+    settings = sublime.load_settings('hyper_click.sublime-settings')
+    annotations_enabled = settings.get('annotations_enabled')
     if not annotations_enabled:
         return False
 
-    selector = settins.get('selector')
+    selector = settings.get('selector')
     if view.match_selector(view.sel()[0].a, selector):
         return True
 
@@ -56,9 +56,6 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
         self.roots = view.window().folders()
         self.syntax = view.settings().get('syntax')
         settings = sublime.load_settings('hyper_click.sublime-settings')
-
-        # Per-project settings are optional
-        self.proj_settings = view.settings().get('hyper_click', {})
 
         line_range = view.line(point)
 

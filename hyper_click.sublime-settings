@@ -5,7 +5,7 @@
     "annotations_enabled": true,
 
     // HyperClick is enabled when the current scope matches this selector
-    "selector": "source.js,source.sass,source.scss,source.less,embedding.php,source.stylus,text.html,source.jstl,source.css,source.pug,source.sugarss,text.sugarml,source.nunjucks,source.jinja2,text.html.twig,source.dart,text.html.smarty",
+    "selector": "source.js,source.ts,source.sass,source.scss,source.less,embedding.php,source.stylus,text.html,source.jstl,source.css,text.pug,source.sugarss,text.sugarml,source.nunjucks,source.jinja2,text.html.twig,source.dart,text.html.smarty",
 
     // Supported languages
     // - each has at least a regex to match import statements
@@ -23,13 +23,34 @@
             ],
             "extensions": ["js", "jsx", "vue", "mjs", "ts", "tsx", "svelte"],
             "vendor_dirs": ["node_modules"],
+            "lookup_paths": [],
+            "aliases": {}
+        },
+        "source.ts": {
+            "regexes": [
+                "^import\\s+['\"](.+)['\"];?$",
+                ".*from\\s+['\"](.+)['\"];?$",
+                ".*require\\(['\"](.+?)['\"]\\).*",
+                ".*import\\((?:\\/\\*.+?\\*\\/\\s+)?['\"](.+)['\"]\\)(?:[;\\.,])?",
+            ],
+            "extensions": ["js", "jsx", "vue", "mjs", "ts", "tsx", "svelte"],
+            "vendor_dirs": ["node_modules"],
+            "lookup_paths": [],
             "aliases": {}
         },
         "source.sass": {
             "regexes": [
                 "^@import\\s+['\"](.+)['\"];?$"
             ],
-            "extensions": ["scss", "sass"]
+            "extensions": ["sass"],
+            "vendor_dirs": ["node_modules"]
+        },
+        "source.scss": {
+            "regexes": [
+                "^@import\\s+['\"](.+)['\"];?$"
+            ],
+            "extensions": ["scss"],
+            "vendor_dirs": ["node_modules"]
         },
         "source.less": {
             "regexes": [
@@ -57,7 +78,7 @@
                 ".*?<link\\s+rel=\"import\"\\s+href=['\"](.+)['\"]/?>.*?"
             ],
             "extensions": ["html"],
-            "vendor_dirs": ["node_modules", "bower_components"]
+            "vendor_dirs": ["node_modules"]
         },
         "text.html.jstl": {
             "regexes": [
@@ -75,7 +96,7 @@
                 "^@import\\s+['\"](.+)['\"].*?;$",
                 "^@import\\s+url\\(['\"](.+)['\"]\\).*?;$"
             ],
-            "extensions": ["css", "pcss", "postcss"]
+            "extensions": ["css", "pcss"]
         },
         "text.pug": {
             "regexes": [
