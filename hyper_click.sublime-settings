@@ -159,7 +159,8 @@
         },
         "text.html.smarty": {
             "regexes": [
-                "^.*{include\\s+file=['\"]([^'\"]+)['\"].*?}.*$"
+                "^.*{include\\s+file=['\"]([^'\"]+)['\"].*?}.*$",
+                "^.*{extends\\s+file=['\"]([^'\"]+)['\"].*?}.*$"
             ],
             "extensions": ["smarty"]
         }
