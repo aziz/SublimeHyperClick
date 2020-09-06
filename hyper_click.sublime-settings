@@ -14,43 +14,26 @@
     // - aliases map something short in the import statement (e.g. "@") to a path in your project
     // - HyperClick will also search in lookup_paths, which is particularly useful in project settings
     "scopes": {
-        "source.js": {
+        "source.ts, source.js": {
             "regexes": [
                 "^import\\s+['\"](.+)['\"];?$",
                 ".*from\\s+['\"](.+)['\"];?$",
                 ".*require\\(['\"](.+?)['\"]\\).*",
                 ".*import\\((?:\\/\\*.+?\\*\\/\\s+)?['\"](.+)['\"]\\)(?:[;\\.,])?",
             ],
-            "extensions": ["js", "jsx", "vue", "mjs", "ts", "tsx", "svelte"],
+            "extensions": ["ts", "js", "tsx", "jsx", "vue", "mjs", "svelte"],
             "vendor_dirs": ["node_modules"],
             "lookup_paths": [],
             "aliases": {}
         },
-        "source.ts": {
+        "source.scss, source.sass": {
             "regexes": [
-                "^import\\s+['\"](.+)['\"];?$",
-                ".*from\\s+['\"](.+)['\"];?$",
-                ".*require\\(['\"](.+?)['\"]\\).*",
-                ".*import\\((?:\\/\\*.+?\\*\\/\\s+)?['\"](.+)['\"]\\)(?:[;\\.,])?",
+                "^@import\\s+['\"](.+)['\"];?$"
             ],
-            "extensions": ["js", "jsx", "vue", "mjs", "ts", "tsx", "svelte"],
+            "extensions": ["scss", "sass"],
             "vendor_dirs": ["node_modules"],
             "lookup_paths": [],
             "aliases": {}
-        },
-        "source.sass": {
-            "regexes": [
-                "^@import\\s+['\"](.+)['\"];?$"
-            ],
-            "extensions": ["sass"],
-            "vendor_dirs": ["node_modules"]
-        },
-        "source.scss": {
-            "regexes": [
-                "^@import\\s+['\"](.+)['\"];?$"
-            ],
-            "extensions": ["scss"],
-            "vendor_dirs": ["node_modules"]
         },
         "source.less": {
             "regexes": [
