@@ -1,10 +1,9 @@
-import sublime
 from os import path
 import json
 
-NODE_CORE_MODULES = { 'assert', 'async_hooks', 'buffer', 'child_process', 'cluster', 'console', 'constants', 'crypto', 'dgram', 'dns', 'domain', 'events', 'fs', 'http', 'http2', 'https', 'module', 'net', 'os', 'path', 'perf_hooks', 'process', 'punycode', 'querystring', 'readline', 'repl', 'stream', 'string_decoder', 'sys', 'timers', 'tls', 'trace_events', 'tty', 'url', 'util', 'v8', 'vm', 'wasi', 'worker_threads', 'zlib', 'assert/strict', 'dns/promises', 'fs/promises', 'stream/promises', 'timers/promises' }
-
+NODE_CORE_MODULES = {'assert', 'async_hooks', 'buffer', 'child_process', 'cluster', 'console', 'constants', 'crypto', 'dgram', 'dns', 'domain', 'events', 'fs', 'http', 'http2', 'https', 'module', 'net', 'os', 'path', 'perf_hooks', 'process', 'punycode', 'querystring', 'readline', 'repl', 'stream', 'string_decoder', 'sys', 'timers', 'tls', 'trace_events', 'tty', 'url', 'util', 'v8', 'vm', 'wasi', 'worker_threads', 'zlib', 'assert/strict', 'dns/promises', 'fs/promises', 'stream/promises', 'timers/promises'}
 NODE_CORE_MODULES_TEMPLATE = "https://github.com/nodejs/node/blob/master/lib/{}.js"
+
 
 def walkup_dir(start_path, vendor_dirs, endpath = '/'):
     current_dir = start_path
@@ -23,7 +22,6 @@ def walkup_dir(start_path, vendor_dirs, endpath = '/'):
             current_dir = parent_dir
 
 
-# A default resolver that resolves to a subfolder along along with one of the valid extensions
 class GenericPathResolver:
     def __init__(self, view, str_path, current_dir, roots, settings):
         self.str_path = str_path
@@ -142,7 +140,7 @@ class GenericPathResolver:
             if underscore_extd:
                 return underscore_extd
 
-    def resolve_with_underscore(self, path_name):        
+    def resolve_with_underscore(self, path_name):
         pathname, filename = path.split(path_name)
         combined = path.join(pathname, '_' + filename)
 

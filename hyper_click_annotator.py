@@ -89,8 +89,6 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
             self.current_line = (-1, -1)
             view.erase_phantoms('hyper_click')
 
-    # ---------------------------------------
-
     def on_selection_modified_async(self, view):
         if view.is_dirty():
             view.erase_phantoms('hyper_click')

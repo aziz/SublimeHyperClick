@@ -7,7 +7,7 @@ dirs_regex = [
 ]
 prog = re.compile('(<([\\w-]*)\\:([\\w-]*))')
 
-# TEMP: hardcoded settings
+
 class JstlPathResolver:
     def __init__(self, view, str_lookup, current_dir, roots, settings):
         self.view = view

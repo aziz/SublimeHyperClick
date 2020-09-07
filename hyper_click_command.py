@@ -57,7 +57,6 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
 
         self.window.status_message("File not found")
 
-
     def is_valid_line(self, line_content):
         view = self.view
         scopes = self.settings.get('scopes', {})
