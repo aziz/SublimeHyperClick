@@ -5,26 +5,6 @@ import webbrowser
 from .hyper_click.path_resolver import HyperClickPathResolver
 
 
-def is_applicable(scope, view):
-    if int(sublime.version()) < 3118:
-        # phantoms are not supported
-        return False
-
-    if not scope:
-        return False
-
-    settings = sublime.load_settings('hyper_click.sublime-settings')
-    annotations_enabled = settings.get('annotations_enabled')
-    if not annotations_enabled:
-        return False
-
-    selector = settings.get('selector')
-    if view.match_selector(view.sel()[0].a, selector):
-        return True
-
-    return False
-
-
 class HyperClickAnnotator(sublime_plugin.EventListener):
 
     def __init__(self):
@@ -53,9 +33,12 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
         if not self.window:
             return
 
+        settings = sublime.load_settings('hyper_click.sublime-settings')
+        if not settings.get('annotations_enabled'):
+            return
+
         self.roots = view.window().folders()
         self.syntax = view.settings().get('syntax')
-        settings = sublime.load_settings('hyper_click.sublime-settings')
 
         line_range = view.line(point)
 
