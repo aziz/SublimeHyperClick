@@ -1,0 +1,13 @@
+HyperClick 2.0 - Breaking Changes
+=================================
+
+HyperClick has been rebuilt to be both simpler and more flexible:
+- All file resolvers were consolidated into one.
+- Language support is now managed via selectors, making it
+  easier to add languages and seamless to support alternative
+  packages for any language.
+- Settings were restructured to be easier to extend and modify.
+
+This might mean you need to update your (project-) settings.
+Please read this explainer to help you do so:
+https://...
