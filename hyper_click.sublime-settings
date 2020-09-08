@@ -33,7 +33,7 @@
                 ".*require\\(['\"](.+?)['\"]\\).*",
                 ".*import\\((?:\\/\\*.+?\\*\\/\\s+)?['\"](.+)['\"]\\)(?:[;\\.,])?",
             ],
-            "extensions": ["js", "jsx", "vue", "mjs", "ts", "tsx", "svelte"],
+            "extensions": ["ts", "tsx", "js", "jsx", "vue", "mjs", "svelte"],
             "vendor_dirs": ["node_modules"],
             "lookup_paths": [],
             "aliases": {}
