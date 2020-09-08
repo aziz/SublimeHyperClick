@@ -8,6 +8,6 @@ HyperClick has been rebuilt to be both simpler and more flexible:
   packages for any language.
 - Settings were restructured to be easier to extend and modify.
 
-This might mean you need to update your (project-) settings.
+This means you might need to update your (project-) settings.
 Please read this explainer to help you do so:
-https://...
+https://github.com/aziz/SublimeHyperClick/blob/master/README.md#upgrading-settings-for-20
