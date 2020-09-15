@@ -117,3 +117,46 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
 
     def on_hover(self, view, point, hover_zone):
         self.annotate(point, view)
+
+
+def plugin_loaded():
+    window = sublime.active_window()
+    if not window:
+        return
+    view = window.active_view()
+    if not view:
+        return
+
+    settings = sublime.load_settings('hyper_click.sublime-settings')
+    project_settings = view.settings().get('hyper_click', {})
+    old_keys = [
+        'supported_syntaxes',
+        'import_line_regex',
+        'valid_extensions',
+        'default_filenames',
+        'vendor_dirs',
+        'aliases',
+        'lookup_paths'
+    ]
+    msg = ''
+
+    for key in old_keys:
+        if settings.has(key):
+            msg += key + '\n'
+        if project_settings.get(key, False):
+            msg += key + ' (in project)\n'
+
+    if msg != '':
+        panel = window.create_output_panel('HyperClickSettings', True)
+        panel.set_read_only(False)
+        panel.run_command('append', {
+            'characters': 'Old HyperClick settings detected:\n'
+        })
+        panel.run_command('append', {
+            'characters': msg
+        })
+        panel.run_command('append', {
+            'characters': '\nPlease refer to the HyperClick README on how to upgrade\nhttps://github.com/aziz/SublimeHyperClick/blob/master/README.md#upgrading-settings-for-20'
+        })
+        panel.set_read_only(True)
+        window.run_command("show_panel", {"panel": 'output.HyperClickSettings'})
