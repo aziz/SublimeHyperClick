@@ -41,13 +41,13 @@ HyperClick extends the use of the <kbd>F12</kbd> (`Go to definition`) shortcut, 
 
 ## Settings
 You can customize HyperClick settings by going to
-`Preferences > Package Settings > HyperClick > Settings`
+`Preferences > Package Settings > HyperClick > Settings`, or calling `Preferences: HyperClick Settings` from the command palette.
 
 ### Project settings
 
 You can use [project settings](https://www.sublimetext.com/docs/3/projects.html) to configure HyperClick to look for files at specific dirs, through the settings `"lookup_paths"` and `"aliases"`.
 
-To open the project settings file, go to `Project > Settings`. If the `Settings` option is grayed out, choose the option `Save Project As...` (right above it) to save it to disk. The `Settings` option can now be clicked.
+To open the project settings file, go to `Project > Settings`. If the `Settings` option is grayed out, choose the option `Save Project As...` (right above it) to save it to disk. The `Settings` option can now be selected.
 
 #### Example
 
@@ -60,7 +60,7 @@ To open the project settings file, go to `Project > Settings`. If the `Settings`
 		}
 	],
 	"settings": {
-		"hyper_click": {
+		"HyperClick": {
 			"scopes": {
 				"source.sass": {
 					"lookup_paths": [
@@ -81,8 +81,11 @@ To open the project settings file, go to `Project > Settings`. If the `Settings`
 
 ### Upgrading settings for 2.0
 
-In 2.0 the settings structure was inverted, and no longer relies on syntax filename mapping. 
+In 2.0 the language-specific settings no longer rely on syntax filename mapping. 
 Each language is supported via an entry in the "scopes" object, by the language ["scope"](https://www.sublimetext.com/docs/3/scope_naming.html) name. 
+
+To prevent conflicting settings (and for consistency), the settings file has been renamed to [HyperClick.sublime-settings](https://github.com/aziz/SublimeHyperClick/blob/master/HyperClick.sublime-settings). If you have any old settings, they're in `Packages/User/hyper_click.sublime-settings` (where `Packages` can be found via Preferences > Browse Packages).
+Project settings have been moved from the `hyper_click`
 
 To upgrade your settings, the first step is to rearrange the settings to this new structure. Then:
 

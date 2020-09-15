@@ -1,7 +1,7 @@
 {
     // Enable and tweak the inline annotations
-    "annotation_found_text": "➜",
-    "annotation_not_found_text": "✘",
+    "annotation_found_text": "→",
+    "annotation_not_found_text": "×",
     "annotations_enabled": true,
 
     // HyperClick is enabled when the current scope matches this selector

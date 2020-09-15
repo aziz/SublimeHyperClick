@@ -1,0 +1,14 @@
+[
+    {
+        "caption": "HyperClick: Goto File",
+        "command": "hyper_click_jump"
+    },
+    {
+        "caption": "Preferences: HyperClick Settings",
+        "command": "edit_settings", "args":
+        {
+            "base_file": "${packages}/HyperClick/HyperClick.sublime-settings",
+            "default": "// HyperClick Settings - User\n{\n\t$0\n}\n"
+        }
+    }
+]

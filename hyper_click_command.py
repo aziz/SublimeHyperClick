@@ -19,7 +19,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
     def __init__(self, view):
         self.current_line = (-1, -1)
         self.view = view
-        self.settings = sublime.load_settings('hyper_click.sublime-settings')
+        self.settings = sublime.load_settings('HyperClick.sublime-settings')
         self.window = view.window()
 
     def want_event(self):
