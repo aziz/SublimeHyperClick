@@ -31,7 +31,7 @@ class GenericPathResolver:
         self.vendor_dirs = []
         self.lookup_paths = []
 
-        cursor = view.sel()[0].a
+        cursor = view.sel()[0].b
         self.scope_is_js = view.match_selector(cursor, 'source.js,source.ts')
         self.scope_is_sass = view.match_selector(cursor, 'source.scss,source.sass')
 

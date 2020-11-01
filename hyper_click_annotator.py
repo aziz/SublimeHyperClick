@@ -14,7 +14,7 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
         settings = sublime.load_settings('hyper_click.sublime-settings')
         scopes = settings.get('scopes', {})
         for selector in scopes:
-            if view.match_selector(view.sel()[0].a, selector):
+            if view.match_selector(view.sel()[0].b, selector):
                 for regex_str in scopes[selector]['regexes']:
                     pattern = re.compile(regex_str)
                     matched = pattern.match(line_content)
@@ -98,7 +98,7 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
             view.erase_phantoms('hyper_click')
             return
 
-        point = view.sel()[0].a
+        point = view.sel()[0].b
         self.annotate(point, view)
 
     def on_activated_async(self, view):
@@ -109,7 +109,7 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
 
     def on_query_context(self, view, key, operator, operand, match_all):
         if key == 'hyper_click_jump_line':
-            cursor = view.sel()[0].a
+            cursor = view.sel()[0].b
             line_range = view.line(cursor)
             line_content = view.substr(line_range).strip()
             return bool(self.is_valid_line(line_content))
