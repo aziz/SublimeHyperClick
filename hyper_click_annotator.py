@@ -11,7 +11,7 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
         self.current_line = (-1, -1)
 
     def is_valid_line(self, line_content, view):
-        settings = sublime.load_settings('hyper_click.sublime-settings')
+        settings = sublime.load_settings('HyperClick.sublime-settings')
         scopes = settings.get('scopes', {})
         for selector in scopes:
             if view.match_selector(view.sel()[0].a, selector):
@@ -33,7 +33,7 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
         if not self.window:
             return
 
-        settings = sublime.load_settings('hyper_click.sublime-settings')
+        settings = sublime.load_settings('HyperClick.sublime-settings')
         if not settings.get('annotations_enabled'):
             return
 
@@ -127,7 +127,7 @@ def plugin_loaded():
     if not view:
         return
 
-    settings = sublime.load_settings('hyper_click.sublime-settings')
+    settings = sublime.load_settings('HyperClick.sublime-settings')
     project_settings = view.settings().get('hyper_click', {})
     old_keys = [
         'supported_syntaxes',
