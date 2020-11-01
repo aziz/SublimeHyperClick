@@ -4,8 +4,27 @@
     "annotation_not_found_text": "×",
     "annotations_enabled": true,
 
-    // HyperClick is enabled when the current scope matches this selector
-    "selector": "source.js,source.ts,source.sass,source.scss,source.less,embedding.php,source.stylus,text.html,source.jstl,source.css,text.pug,source.sugarss,text.sugarml,source.nunjucks,source.jinja2,text.html.twig,source.dart,text.html.smarty",
+    // HyperClick is enabled when the current scope matches any of selectors
+    "selectors": [
+        "embedding.php",
+        "source.css",
+        "source.dart",
+        "source.jinja2",
+        "source.js",
+        "source.jstl",
+        "source.less",
+        "source.nunjucks",
+        "source.sass",
+        "source.scss",
+        "source.stylus",
+        "source.sugarss",
+        "source.ts",
+        "text.html",
+        "text.html.smarty",
+        "text.html.twig",
+        "text.pug",
+        "text.sugarml",
+    ],
 
     // Supported languages
     // - each has at least a regex to match import statements

@@ -71,7 +71,8 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
 
     def is_visible(self, event=None):
         view = self.view
-        selector = self.settings.get('selector')
+        selector = "(" + ")|(".join(self.settings.get('selectors')) + ")"
+
         if not view.match_selector(view.sel()[0].b, selector):
             return False
         else:
