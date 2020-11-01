@@ -9,8 +9,7 @@ def get_cursor(view, event=None):
         vector = (event['x'], event['y'])
         point = view.window_to_text(vector)
         return sublime.Region(point)
-    else:
-        return view.sel()[0]
+    return view.sel()[0]
 
 
 class HyperClickJumpCommand(sublime_plugin.TextCommand):
@@ -58,10 +57,9 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
 
     def is_valid_line(self, line_content):
         view = self.view
-        scopes = self.settings.get('scopes', {})
-        for selector in scopes:
+        for selector, rule in self.settings.get('scopes', {}).items():
             if view.match_selector(view.sel()[0].a, selector):
-                for regex_str in scopes[selector]['regexes']:
+                for regex_str in rule['regexes']:
                     pattern = re.compile(regex_str)
                     matched = pattern.match(line_content)
                     if matched:
@@ -80,14 +78,11 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
 
         if not view.match_selector(view.sel()[0].a, selector_str):
             return False
-        else:
-            cursor = get_cursor(view, event)
-            if not (len(view.sel()) == 1 and cursor.empty()):
-                return False
-
-            line_range = view.line(cursor)
-            line_content = view.substr(line_range).strip()
-            matched = self.is_valid_line(line_content)
-            if matched:
-                return True
+        
+        cursor = get_cursor(view, event)
+        if not (len(view.sel()) == 1 and cursor.empty()):
             return False
+
+        line_range = view.line(cursor)
+        line_content = view.substr(line_range).strip()
+        return bool(self.is_valid_line(line_content))

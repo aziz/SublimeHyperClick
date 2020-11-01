@@ -11,10 +11,9 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
 
     def is_valid_line(self, line_content, view):
         settings = sublime.load_settings('hyper_click.sublime-settings')
-        scopes = settings.get('scopes', {})
-        for selector in scopes:
+        for selector, rule in settings.get('scopes', {}).items():
             if view.match_selector(view.sel()[0].a, selector):
-                for regex_str in scopes[selector]['regexes']:
+                for regex_str in rule['regexes']:
                     pattern = re.compile(regex_str)
                     matched = pattern.match(line_content)
                     if matched:

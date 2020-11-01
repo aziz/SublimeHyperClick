@@ -38,31 +38,21 @@ class GenericPathResolver:
         matching_roots = [root for root in roots if self.current_dir.startswith(root)]
         self.current_root = matching_roots[0] if matching_roots else self.current_dir
 
-        scopes = settings.get('scopes', {})
-        for selector in scopes:
+        for selector, rule in settings.get('scopes', {}).items():
             if view.match_selector(cursor, selector):
-                self.aliases = scopes[selector].get('aliases', {})
-                self.valid_extensions = scopes[selector].get('extensions', [])
-                self.vendor_dirs = scopes[selector].get('vendor_dirs', [])
-                self.lookup_paths = scopes[selector].get('vendor_dirs', [])
-                self.lookup_paths.extend(
-                    scopes[selector].get('lookup_paths', [])
-                )
+                self.aliases = rule.get('aliases', {})
+                self.valid_extensions = rule.get('extensions', [])
+                self.vendor_dirs = rule.get('vendor_dirs', [])
+                self.lookup_paths = rule.get('vendor_dirs', [])
+                self.lookup_paths.extend(rule.get('lookup_paths', []))
 
         # check the view for applicable project settings
         project_settings = view.settings().get('hyper_click', {})
-        project_scopes = project_settings.get('scopes', {})
-        for selector in project_scopes:
+        for selector, rule in project_settings.get('scopes', {}).items():
             if view.match_selector(cursor, selector):
-                self.aliases.update(
-                    project_scopes[selector].get('aliases', {})
-                )
-                self.valid_extensions.extend(
-                    project_scopes[selector].get('extensions', [])
-                )
-                self.lookup_paths.extend(
-                    project_scopes[selector].get('lookup_paths', [])
-                )
+                self.aliases.update(rule.get('aliases', {}))
+                self.valid_extensions.extend(rule.get('extensions', []))
+                self.lookup_paths.extend(rule.get('lookup_paths', []))
 
     def resolve(self):
         if self.scope_is_js:
