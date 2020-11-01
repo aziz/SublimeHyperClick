@@ -1,3 +1,4 @@
+from . import get_enabled_scopes
 from os import path
 import json
 
@@ -38,7 +39,7 @@ class GenericPathResolver:
         matching_roots = [root for root in roots if self.current_dir.startswith(root)]
         self.current_root = matching_roots[0] if matching_roots else self.current_dir
 
-        for selector, rule in settings.get('scopes', {}).items():
+        for selector, rule in get_enabled_scopes(settings).items():
             if view.match_selector(cursor, selector):
                 self.aliases = rule.get('aliases', {})
                 self.valid_extensions = rule.get('extensions', [])
@@ -48,7 +49,7 @@ class GenericPathResolver:
 
         # check the view for applicable project settings
         project_settings = view.settings().get('hyper_click', {})
-        for selector, rule in project_settings.get('scopes', {}).items():
+        for selector, rule in get_enabled_scopes(project_settings).items():
             if view.match_selector(cursor, selector):
                 self.aliases.update(rule.get('aliases', {}))
                 self.valid_extensions.extend(rule.get('extensions', []))

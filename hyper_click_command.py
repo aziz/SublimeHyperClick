@@ -1,6 +1,7 @@
 import sublime_plugin
 import sublime
 import re
+from .hyper_click import get_enabled_scopes
 from .hyper_click.path_resolver import HyperClickPathResolver
 
 
@@ -57,7 +58,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
 
     def is_valid_line(self, line_content):
         view = self.view
-        for selector, rule in self.settings.get('scopes', {}).items():
+        for selector, rule in get_enabled_scopes(self.settings).items():
             if view.match_selector(view.sel()[0].a, selector):
                 for regex_str in rule['regexes']:
                     pattern = re.compile(regex_str)
@@ -69,14 +70,8 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
     def is_visible(self, event=None):
         view = self.view
 
-        selectors = set(
-            selector
-            for selector, rule in self.settings.get("scopes", {}).items()
-            if (rule or {}).get("enabled", False)
-        )
-        selector_str = "(" + ")|(".join(selectors) + ")"
-
-        if not view.match_selector(view.sel()[0].a, selector_str):
+        selector = "(" + ")|(".join(get_enabled_scopes(self.settings).keys()) + ")"
+        if not view.match_selector(view.sel()[0].b, selector):
             return False
         
         cursor = get_cursor(view, event)

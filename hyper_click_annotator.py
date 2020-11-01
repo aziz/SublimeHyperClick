@@ -1,6 +1,7 @@
 import sublime_plugin
 import sublime
 import re
+from .hyper_click import get_enabled_scopes
 from .hyper_click.path_resolver import HyperClickPathResolver
 
 
@@ -11,7 +12,7 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
 
     def is_valid_line(self, line_content, view):
         settings = sublime.load_settings('hyper_click.sublime-settings')
-        for selector, rule in settings.get('scopes', {}).items():
+        for selector, rule in get_enabled_scopes(settings).items():
             if view.match_selector(view.sel()[0].a, selector):
                 for regex_str in rule['regexes']:
                     pattern = re.compile(regex_str)
