@@ -28,7 +28,9 @@
         },
         "source.scss, source.sass": {
             "regexes": [
-                "^@import\\s+['\"](.+)['\"];?$"
+                "^@import\\s+['\"](.+)['\"];?$",
+                "^@use\\s+(?:\/\\*.+?\\*\/\\s+)?['\"](.+)['\"].+;?$",
+                "^@forward\\s+(?:\/\\*.+?\\*\/\\s+)?['\"](.+)['\"].+;?$"
             ],
             "extensions": ["scss", "sass"],
             "vendor_dirs": ["node_modules"],
