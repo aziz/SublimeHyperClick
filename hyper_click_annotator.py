@@ -112,7 +112,7 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
             cursor = view.sel()[0].b
             line_range = view.line(cursor)
             line_content = view.substr(line_range).strip()
-            return bool(self.is_valid_line(line_content))
+            return bool(self.is_valid_line(line_content, view))
         return None
 
     def on_hover(self, view, point, hover_zone):
