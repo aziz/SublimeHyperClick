@@ -4,6 +4,9 @@ import json
 NODE_CORE_MODULES = {'assert', 'async_hooks', 'buffer', 'child_process', 'cluster', 'console', 'constants', 'crypto', 'dgram', 'dns', 'domain', 'events', 'fs', 'http', 'http2', 'https', 'module', 'net', 'os', 'path', 'perf_hooks', 'process', 'punycode', 'querystring', 'readline', 'repl', 'stream', 'string_decoder', 'sys', 'timers', 'tls', 'trace_events', 'tty', 'url', 'util', 'v8', 'vm', 'wasi', 'worker_threads', 'zlib', 'assert/strict', 'dns/promises', 'fs/promises', 'stream/promises', 'timers/promises'}
 NODE_CORE_MODULES_TEMPLATE = "https://github.com/nodejs/node/blob/master/lib/{}.js"
 
+SASS_CORE_MODULES = sorted(['sass:color', 'sass:list', 'sass:map', 'sass:math', 'sass:meta', 'sass:selector', 'sass:string'])
+SASS_CORE_MODULES_TEMPLATE = "https://sass-lang.com/documentation/modules/{}"
+
 
 def walkup_dir(start_path, vendor_dirs, endpath = '/'):
     current_dir = start_path
@@ -69,6 +72,11 @@ class GenericPathResolver:
             # Core modules
             if self.str_path in NODE_CORE_MODULES:
                 return NODE_CORE_MODULES_TEMPLATE.format(self.str_path)
+
+        if self.scope_is_sass:
+            # Core modules
+            if self.str_path in SASS_CORE_MODULES:
+                return SASS_CORE_MODULES_TEMPLATE.format(self.str_path.replace('sass:', ''))
 
         combined = path.realpath(path.join(self.current_dir, self.str_path))
 
