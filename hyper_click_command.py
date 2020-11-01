@@ -2,7 +2,6 @@ import sublime_plugin
 import sublime
 import re
 from .hyper_click.path_resolver import HyperClickPathResolver
-import webbrowser
 
 
 def get_cursor(view, event=None):
@@ -50,7 +49,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
             resolved_path = file_path.resolve()
             if resolved_path:
                 if resolved_path.startswith('http://') or resolved_path.startswith('https://'):
-                    webbrowser.open_new_tab(resolved_path)
+                    sublime.run_command('open_url', {"url": resolved_path})
                 else:
                     self.window.open_file(resolved_path)
                 return

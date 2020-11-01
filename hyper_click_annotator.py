@@ -1,7 +1,6 @@
 import sublime_plugin
 import sublime
 import re
-import webbrowser
 from .hyper_click.path_resolver import HyperClickPathResolver
 
 
@@ -24,7 +23,7 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
 
     def on_navigate(self, url):
         if url.startswith('http://') or url.startswith('https://'):
-            webbrowser.open_new_tab(url)
+            sublime.run_command('open_url', {"url": url})
         else:
             self.window.open_file(url)
 
