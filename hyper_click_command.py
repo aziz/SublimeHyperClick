@@ -35,7 +35,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         # Setting self.roots here (instead of in `__init__`) fixes a bug with files opened through the quick panel
         self.roots = self.window and self.window.folders()
 
-        cursor = get_cursor(view, event).a
+        cursor = get_cursor(view, event).b
         line_range = view.line(cursor)
         line_content = view.substr(line_range).strip()
         matched = self.is_valid_line(line_content)
@@ -61,7 +61,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
         view = self.view
         scopes = self.settings.get('scopes', {})
         for selector in scopes:
-            if view.match_selector(view.sel()[0].a, selector):
+            if view.match_selector(view.sel()[0].b, selector):
                 for regex_str in scopes[selector]['regexes']:
                     pattern = re.compile(regex_str)
                     matched = pattern.match(line_content)
@@ -72,7 +72,7 @@ class HyperClickJumpCommand(sublime_plugin.TextCommand):
     def is_visible(self, event=None):
         view = self.view
         selector = self.settings.get('selector')
-        if not view.match_selector(view.sel()[0].a, selector):
+        if not view.match_selector(view.sel()[0].b, selector):
             return False
         else:
             cursor = get_cursor(view, event)

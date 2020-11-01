@@ -8,7 +8,7 @@ class HyperClickPathResolver:
         current_file = view.file_name()
         current_dir = path.dirname(path.realpath(current_file))
 
-        if view.match_selector(view.sel()[0].a, 'text.html.jstl'):
+        if view.match_selector(view.sel()[0].b, 'text.html.jstl'):
             self.resolver = JstlPathResolver(view, str_path, current_dir, roots, settings)
         else:
             self.resolver = GenericPathResolver(view, str_path, current_dir, roots, settings)
