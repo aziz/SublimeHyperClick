@@ -48,6 +48,7 @@ class GenericPathResolver:
         cursor = view.sel()[0].b
         self.scope_is_js = view.match_selector(cursor, 'source.js,source.ts')
         self.scope_is_sass = view.match_selector(cursor, 'source.scss,source.sass')
+        self.scope_is_css = view.match_selector(cursor, 'source.css')
 
         matching_roots = [root for root in roots if self.current_dir.startswith(root)]
         self.current_root = matching_roots[0] if matching_roots else self.current_dir
@@ -192,10 +193,18 @@ class GenericPathResolver:
             main_file_sources = []
             exports_dict = data.get('exports', None)
             if exports_dict:
+                if scope_is_sass:
+                    main_file_sources.append(deep_get(data, ['exports', '.', 'sass']))
+                if scope_is_sass or scope_is_css:
+                    main_file_sources.append(deep_get(data, ['exports', '.', 'style']))
                 main_file_sources.append(deep_get(data, ['exports', '.', 'import']))
                 main_file_sources.append(deep_get(data, ['exports', '.', 'require']))
                 main_file_sources.append(deep_get(data, ['exports', '.', 'node']))
                 main_file_sources.append(deep_get(data, ['exports', '.', 'default']))
+                if scope_is_sass:
+                    main_file_sources.append(deep_get(data, ['exports', 'sass']))
+                if scope_is_sass or scope_is_css:
+                    main_file_sources.append(deep_get(data, ['exports', 'style']))
                 main_file_sources.append(deep_get(data, ['exports', 'import']))
                 main_file_sources.append(deep_get(data, ['exports', 'require']))
                 main_file_sources.append(deep_get(data, ['exports', 'node']))
@@ -203,6 +212,8 @@ class GenericPathResolver:
                 main_file_sources.append(deep_get(data, ['exports', '.']))
                 main_file_sources.append(deep_get(data, ['exports']))
             else:
+                if scope_is_sass or scope_is_css:
+                    main_file_sources.append(deep_get(data, ['style']))
                 main_file_sources.append(deep_get(data, ['module']))
                 main_file_sources.append(deep_get(data, ['main']))
 
