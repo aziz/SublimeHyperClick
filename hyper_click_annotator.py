@@ -128,7 +128,7 @@ def plugin_loaded():
         return
 
     settings = sublime.load_settings('HyperClick.sublime-settings')
-    project_settings = view.settings().get('hyper_click', {})
+    project_settings = view.settings().get('HyperClick', {})
     old_keys = [
         'supported_syntaxes',
         'import_line_regex',

@@ -65,7 +65,7 @@ class GenericPathResolver:
                 )
 
         # check the view for applicable project settings
-        project_settings = view.settings().get('hyper_click', {})
+        project_settings = view.settings().get('HyperClick', {})
         project_scopes = project_settings.get('scopes', {})
         for selector in project_scopes:
             if view.match_selector(cursor, selector):
