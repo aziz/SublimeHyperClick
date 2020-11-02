@@ -1,5 +1,6 @@
 from os import path
 import json
+import array
 
 NODE_CORE_MODULES = {'assert', 'async_hooks', 'buffer', 'child_process', 'cluster', 'console', 'constants', 'crypto', 'dgram', 'dns', 'domain', 'events', 'fs', 'http', 'http2', 'https', 'module', 'net', 'os', 'path', 'perf_hooks', 'process', 'punycode', 'querystring', 'readline', 'repl', 'stream', 'string_decoder', 'sys', 'timers', 'tls', 'trace_events', 'tty', 'url', 'util', 'v8', 'vm', 'wasi', 'worker_threads', 'zlib', 'assert/strict', 'dns/promises', 'fs/promises', 'stream/promises', 'timers/promises'}
 NODE_CORE_MODULES_TEMPLATE = "https://github.com/nodejs/node/blob/master/lib/{}.js"
@@ -7,6 +8,16 @@ NODE_CORE_MODULES_TEMPLATE = "https://github.com/nodejs/node/blob/master/lib/{}.
 SASS_CORE_MODULES = {'sass:color', 'sass:list', 'sass:map', 'sass:math', 'sass:meta', 'sass:selector', 'sass:string'}
 SASS_CORE_MODULES_TEMPLATE = "https://sass-lang.com/documentation/modules/{}"
 
+def deep_get(d, keys, default=None):
+    assert type(keys) is list
+    if d is None:
+        return default
+    if not keys:
+        return d
+    return deep_get(d.get(keys[0]), keys[1:], default)
+
+def find(lst, fn):
+    return next((x for x in lst if fn(x)), None)
 
 def walkup_dir(start_path, vendor_dirs, endpath = '/'):
     current_dir = start_path
@@ -177,9 +188,28 @@ class GenericPathResolver:
         if path.isdir(dirname) and path.isfile(package_json_path):
             with open(package_json_path, 'r', encoding='utf-8') as data_file:
                 data = json.load(data_file)
-            main_file = data.get('main', None)
+
+            main_file_sources = []
+            exports_dict = data.get('exports', None)
+            if exports_dict:
+                main_file_sources.append(deep_get(data, ['exports', '.', 'import']))
+                main_file_sources.append(deep_get(data, ['exports', '.', 'require']))
+                main_file_sources.append(deep_get(data, ['exports', '.', 'node']))
+                main_file_sources.append(deep_get(data, ['exports', '.', 'default']))
+                main_file_sources.append(deep_get(data, ['exports', 'import']))
+                main_file_sources.append(deep_get(data, ['exports', 'require']))
+                main_file_sources.append(deep_get(data, ['exports', 'node']))
+                main_file_sources.append(deep_get(data, ['exports', 'default']))
+                main_file_sources.append(deep_get(data, ['exports', '.']))
+                main_file_sources.append(deep_get(data, ['exports']))
+            else:
+                main_file_sources.append(deep_get(data, ['module']))
+                main_file_sources.append(deep_get(data, ['main']))
+
+            main_file = find(main_file_sources, lambda string: type(string) == str)
+
             if main_file:
-                dest = path.realpath(path.join(dirname, data['main']))
+                dest = path.realpath(path.join(dirname, main_file))
                 result = self.resolve_nodepath(dest)
                 if result:
                     return result
