@@ -150,7 +150,7 @@ class GenericPathResolver:
         if path.isfile(path_name):
             return path_name
 
-        with_ext = self.resolve_with_exts(path_name)
+        with_ext = self.resolve_with_exts(path_name) or self.resolve_with_exts(path.join(path_name, 'index'))
         if with_ext:
             return with_ext
 

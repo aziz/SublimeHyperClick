@@ -33,7 +33,7 @@
     // - aliases map something short in the import statement (e.g. "@") to a path in your project
     // - HyperClick will also search in lookup_paths, which is particularly useful in project settings
     "scopes": {
-        "source.ts, source.js": {
+        "source.ts, source.js,source.tsx, source.jsx": {
             "regexes": [
                 "^import\\s+['\"](.+)['\"];?$",
                 ".*from\\s+['\"](.+)['\"];?$",
