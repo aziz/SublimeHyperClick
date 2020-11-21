@@ -11,6 +11,7 @@
         "source.dart",
         "source.jinja2",
         "source.js",
+        "source.jsx",
         "source.jstl",
         "source.less",
         "source.nunjucks",
@@ -19,6 +20,7 @@
         "source.stylus",
         "source.sugarss",
         "source.ts",
+        "source.tsx",
         "text.html",
         "text.html.smarty",
         "text.html.twig",
@@ -33,7 +35,7 @@
     // - aliases map something short in the import statement (e.g. "@") to a path in your project
     // - HyperClick will also search in lookup_paths, which is particularly useful in project settings
     "scopes": {
-        "source.ts, source.js,source.tsx, source.jsx": {
+        "source.ts, source.js, source.tsx, source.jsx": {
             "regexes": [
                 "^import\\s+['\"](.+)['\"];?$",
                 ".*from\\s+['\"](.+)['\"];?$",
