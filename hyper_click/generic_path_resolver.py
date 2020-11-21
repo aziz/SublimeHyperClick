@@ -1,6 +1,8 @@
 from os import path
 import json
 import array
+import sublime
+
 
 NODE_CORE_MODULES = {'assert', 'async_hooks', 'buffer', 'child_process', 'cluster', 'console', 'constants', 'crypto', 'dgram', 'dns', 'domain', 'events', 'fs', 'http', 'http2', 'https', 'module', 'net', 'os', 'path', 'perf_hooks', 'process', 'punycode', 'querystring', 'readline', 'repl', 'stream', 'string_decoder', 'sys', 'timers', 'tls', 'trace_events', 'tty', 'url', 'util', 'v8', 'vm', 'wasi', 'worker_threads', 'zlib', 'assert/strict', 'dns/promises', 'fs/promises', 'stream/promises', 'timers/promises'}
 NODE_CORE_MODULES_TEMPLATE = "https://github.com/nodejs/node/blob/master/lib/{}.js"
@@ -46,7 +48,7 @@ class GenericPathResolver:
         self.lookup_paths = []
 
         cursor = view.sel()[0].b
-        self.scope_is_js = view.match_selector(cursor, 'source.js,source.ts')
+        self.scope_is_js = view.match_selector(cursor, 'source.js,source.ts,source.jsx,source.tsx')
         self.scope_is_sass = view.match_selector(cursor, 'source.scss,source.sass')
         self.scope_is_css = view.match_selector(cursor, 'source.css')
 
@@ -193,17 +195,17 @@ class GenericPathResolver:
             main_file_sources = []
             exports_dict = data.get('exports', None)
             if exports_dict:
-                if scope_is_sass:
+                if self.scope_is_sass:
                     main_file_sources.append(deep_get(data, ['exports', '.', 'sass']))
-                if scope_is_sass or scope_is_css:
+                if self.scope_is_sass or self.scope_is_css:
                     main_file_sources.append(deep_get(data, ['exports', '.', 'style']))
                 main_file_sources.append(deep_get(data, ['exports', '.', 'import']))
                 main_file_sources.append(deep_get(data, ['exports', '.', 'require']))
                 main_file_sources.append(deep_get(data, ['exports', '.', 'node']))
                 main_file_sources.append(deep_get(data, ['exports', '.', 'default']))
-                if scope_is_sass:
+                if self.scope_is_sass:
                     main_file_sources.append(deep_get(data, ['exports', 'sass']))
-                if scope_is_sass or scope_is_css:
+                if self.scope_is_sass or self.scope_is_css:
                     main_file_sources.append(deep_get(data, ['exports', 'style']))
                 main_file_sources.append(deep_get(data, ['exports', 'import']))
                 main_file_sources.append(deep_get(data, ['exports', 'require']))
@@ -212,7 +214,7 @@ class GenericPathResolver:
                 main_file_sources.append(deep_get(data, ['exports', '.']))
                 main_file_sources.append(deep_get(data, ['exports']))
             else:
-                if scope_is_sass or scope_is_css:
+                if self.scope_is_sass or self.scope_is_css:
                     main_file_sources.append(deep_get(data, ['style']))
                 main_file_sources.append(deep_get(data, ['module']))
                 main_file_sources.append(deep_get(data, ['main']))
