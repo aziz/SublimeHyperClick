@@ -150,7 +150,7 @@ class GenericPathResolver:
         if path.isfile(path_name):
             return path_name
 
-        with_ext = self.resolve_with_exts(path_name) or self.resolve_with_exts(path.join(path_name, 'index'))
+        with_ext = self.resolve_with_exts(path_name) or self.resolve_index(path_name)
         if with_ext:
             return with_ext
 
@@ -182,7 +182,7 @@ class GenericPathResolver:
     def resolve_index(self, dirname):
         # matching ./demo to /demo/index.js
         if path.isdir(dirname):
-            return self.resolve_as_file(path.join(dirname, 'index.js'))
+            return self.resolve_with_exts(path.join(dirname, 'index'))
 
     def resolve_as_directory(self, dirname):
         package_json_path = path.join(dirname, 'package.json')
