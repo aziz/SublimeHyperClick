@@ -81,7 +81,7 @@
         },
         "text.html.basic": {
             "regexes": [
-                ".*?<link\\s+rel=\"import\"\\s+href=['\"](.+)['\"]/?>.*?"
+                ".*?<link\\s+rel=\"import\"\\s+href=['\"](.+)['\"]/?>"
             ],
             "extensions": ["htm", "html"],
             "vendor_dirs": ["node_modules"]
