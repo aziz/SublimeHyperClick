@@ -1,3 +1,8 @@
+html {
+  margin: 0;
+  padding: 0;
+}
+
 #hyperClick {
   background-color: var(--background);
   color: var(--foreground);
