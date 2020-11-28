@@ -130,13 +130,13 @@ def plugin_loaded():
     settings = sublime.load_settings('HyperClick.sublime-settings')
     project_settings = view.settings().get('HyperClick', {})
     old_keys = [
-        'supported_syntaxes',
-        'import_line_regex',
-        'valid_extensions',
-        'default_filenames',
-        'vendor_dirs',
         'aliases',
-        'lookup_paths'
+        'default_filenames',
+        'import_line_regex',
+        'lookup_paths',
+        'supported_syntaxes',
+        'valid_extensions',
+        'vendor_dirs',
     ]
     msg = ''
 

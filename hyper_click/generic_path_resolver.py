@@ -1,10 +1,64 @@
 from os import path
 import json
 
-NODE_CORE_MODULES = {'assert', 'async_hooks', 'buffer', 'child_process', 'cluster', 'console', 'constants', 'crypto', 'dgram', 'dns', 'domain', 'events', 'fs', 'http', 'http2', 'https', 'module', 'net', 'os', 'path', 'perf_hooks', 'process', 'punycode', 'querystring', 'readline', 'repl', 'stream', 'string_decoder', 'sys', 'timers', 'tls', 'trace_events', 'tty', 'url', 'util', 'v8', 'vm', 'wasi', 'worker_threads', 'zlib', 'assert/strict', 'dns/promises', 'fs/promises', 'stream/promises', 'timers/promises'}
+NODE_CORE_MODULES = {
+    'assert',
+    'assert/strict',
+    'async_hooks',
+    'buffer',
+    'child_process',
+    'cluster',
+    'console',
+    'constants',
+    'crypto',
+    'dgram',
+    'dns',
+    'dns/promises',
+    'domain',
+    'events',
+    'fs',
+    'fs/promises',
+    'http',
+    'http2',
+    'https',
+    'module',
+    'net',
+    'os',
+    'path',
+    'perf_hooks',
+    'process',
+    'punycode',
+    'querystring',
+    'readline',
+    'repl',
+    'stream',
+    'stream/promises',
+    'string_decoder',
+    'sys',
+    'timers',
+    'timers/promises',
+    'tls',
+    'trace_events',
+    'tty',
+    'url',
+    'util',
+    'v8',
+    'vm',
+    'wasi',
+    'worker_threads',
+    'zlib',
+}
 NODE_CORE_MODULES_TEMPLATE = "https://github.com/nodejs/node/blob/master/lib/{}.js"
 
-SASS_CORE_MODULES = {'sass:color', 'sass:list', 'sass:map', 'sass:math', 'sass:meta', 'sass:selector', 'sass:string'}
+SASS_CORE_MODULES = {
+    'sass:color',
+    'sass:list',
+    'sass:map',
+    'sass:math',
+    'sass:meta',
+    'sass:selector',
+    'sass:string',
+}
 SASS_CORE_MODULES_TEMPLATE = "https://sass-lang.com/documentation/modules/{}"
 
 def deep_get(d, keys, default=None):
