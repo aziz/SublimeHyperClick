@@ -46,8 +46,8 @@ class GenericPathResolver:
         self.lookup_paths = []
 
         cursor = view.sel()[0].b
-        self.scope_is_js = view.match_selector(cursor, 'source.js,source.ts,source.jsx,source.tsx')
-        self.scope_is_sass = view.match_selector(cursor, 'source.scss,source.sass')
+        self.scope_is_js = view.match_selector(cursor, 'source.js | source.jsx | source.ts | source.tsx')
+        self.scope_is_sass = view.match_selector(cursor, 'source.sass | source.scss')
         self.scope_is_css = view.match_selector(cursor, 'source.css')
 
         matching_roots = [root for root in roots if self.current_dir.startswith(root)]
