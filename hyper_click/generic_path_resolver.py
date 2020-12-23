@@ -235,7 +235,10 @@ class GenericPathResolver:
     def resolve_index(self, dirname):
         # matching ./demo to /demo/index.js
         if path.isdir(dirname):
-            return self.resolve_with_exts(path.join(dirname, 'index'))
+            filename = 'index'
+            if self.scope_is_sass:
+                filename = '_index'
+            return self.resolve_with_exts(path.join(dirname, filename))
 
     def resolve_as_directory(self, dirname):
         package_json_path = path.join(dirname, 'package.json')
