@@ -50,8 +50,8 @@
         "source.sass | source.scss": {
             "regexes": [
                 "^@import\\s+['\"](.+)['\"];?$",
-                "^@use\\s+(?:\/\\*.+?\\*\/\\s+)?['\"](.+)['\"].+;?$",
-                "^@forward\\s+(?:\/\\*.+?\\*\/\\s+)?['\"](.+)['\"].+;?$"
+                "^@(?:use|forward)\\s+(?:\/\\*.+?\\*\/\\s+)?['\"](.+)['\"].+;?$",
+                "^@include meta\\.load-css\\(['\"](.+)['\"]\\);?$"
             ],
             "extensions": ["scss", "sass"],
             "vendor_dirs": ["node_modules"],
