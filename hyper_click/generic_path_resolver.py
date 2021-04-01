@@ -117,6 +117,8 @@ class GenericPathResolver:
                     scopes[selector].get('lookup_paths', [])
                 )
 
+        self.should_resolve_as_npm_dependancy = 'node_modules' in self.lookup_paths
+
         # check the view for applicable project settings
         project_settings = view.settings().get('HyperClick', {})
         project_scopes = project_settings.get('scopes', {})
@@ -164,7 +166,8 @@ class GenericPathResolver:
             if result:
                 return result
 
-        if self.scope_is_js:
+        # Resolve inside node_modules
+        if self.should_resolve_as_npm_dependancy:
             result = self.resolve_node_modules(self.str_path, self.current_dir)
             if result:
                 return result
@@ -173,7 +176,7 @@ class GenericPathResolver:
 
     def resolve_relative_to_dir(self, target, directory):
         combined = path.realpath(path.join(directory, target))
-        if self.scope_is_js:
+        if self.should_resolve_as_npm_dependancy:
             return self.resolve_as_file(combined) or self.resolve_as_directory(combined)
         else:
             return self.resolve_as_file(combined)
