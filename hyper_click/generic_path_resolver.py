@@ -1,5 +1,6 @@
 from os import path
 import json
+import sys
 
 NODE_CORE_MODULES = {
     'assert',
@@ -91,6 +92,13 @@ def walkup_dir(start_path, vendor_dirs, endpath = '/'):
 
 class GenericPathResolver:
     def __init__(self, view, str_path, current_dir, roots, settings):
+        # on Windows ST, sometimes the drive letter like "C:\" will be lowercase
+        # that will cause "startswith()" un-matchable
+        # thus, we always convert the drive letter into uppercase
+        if sys.platform == 'win32':
+            roots[:] = map(lambda path: path[:1].upper() + path[1:], roots)
+            current_dir = current_dir[:1].upper() + current_dir[1:]
+
         self.str_path = str_path
         self.current_dir = current_dir
         self.aliases = {}
