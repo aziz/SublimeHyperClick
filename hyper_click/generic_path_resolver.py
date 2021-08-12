@@ -102,6 +102,7 @@ class GenericPathResolver:
         self.scope_is_js = view.match_selector(cursor, 'source.js | source.jsx | source.ts | source.tsx')
         self.scope_is_sass = view.match_selector(cursor, 'source.sass | source.scss')
         self.scope_is_css = view.match_selector(cursor, 'source.css')
+        self.scope_is_lua = view.match_selector(cursor, 'source.lua')
 
         matching_roots = [root for root in roots if self.current_dir.startswith(root)]
         self.current_root = matching_roots[0] if matching_roots else self.current_dir
@@ -240,6 +241,8 @@ class GenericPathResolver:
             filename = 'index'
             if self.scope_is_sass:
                 filename = '_index'
+            if self.scope_is_lua:
+                filename = 'init'
             return self.resolve_with_exts(path.join(dirname, filename))
 
     def resolve_as_directory(self, dirname):

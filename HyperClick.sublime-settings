@@ -14,6 +14,7 @@
         "source.jsx",
         "source.jstl",
         "source.less",
+        "source.lua",
         "source.nunjucks",
         "source.sass",
         "source.scss",
@@ -169,6 +170,14 @@
                 "^.*{extends\\s+file=['\"]([^'\"]+)['\"].*?}.*$"
             ],
             "extensions": ["smarty"]
+        },
+        "source.lua": {
+            "regexes": [
+                ".*require\\(['\"](.+?)['\"]\\).*",
+                ".*require.*['\"](.+?)['\"].*"
+            ],
+            "lookup_paths": ["."],
+            "extensions": ["lua"]
         }
     }
 }
