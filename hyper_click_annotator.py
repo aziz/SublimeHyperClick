@@ -11,6 +11,8 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
         self.current_line = (-1, -1)
 
     def is_valid_line(self, line_content, view):
+        if not self.has_valid_selection(view):
+            return False
         settings = sublime.load_settings('HyperClick.sublime-settings')
         scopes = settings.get('scopes', {})
         for selector in scopes:
@@ -109,6 +111,8 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
 
     def on_query_context(self, view, key, operator, operand, match_all):
         if key == 'hyper_click_jump_line':
+            if not self.has_valid_selection(view):
+                return False
             cursor = view.sel()[0].b
             line_range = view.line(cursor)
             line_content = view.substr(line_range).strip()
@@ -117,6 +121,10 @@ class HyperClickAnnotator(sublime_plugin.EventListener):
 
     def on_hover(self, view, point, hover_zone):
         self.annotate(point, view)
+
+    @staticmethod
+    def has_valid_selection(view):
+        return len(view.sel()) > 0
 
 
 def plugin_loaded():
