@@ -189,11 +189,12 @@ class GenericPathResolver:
                 return result
 
     def resolve_from_alias(self, alias, alias_source):
-        path_parts = self.str_path.split(path.sep)
+        path_parts = path.normpath(self.str_path).split(path.sep)
 
         if path_parts[0] == alias:
             path_parts[0] = alias_source
-            return self.resolve_relative_to_dir(path.normpath(path.join(*path_parts)), self.current_root)
+
+            return self.resolve_relative_to_dir(path.join(*path_parts), self.current_root)
 
     def resolve_with_exts(self, path_name):
         # matching ../index to /index.js
