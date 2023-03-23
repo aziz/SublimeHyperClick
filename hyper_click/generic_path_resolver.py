@@ -1,5 +1,6 @@
 from os import path
 import json
+import re
 
 NODE_CORE_MODULES = {
     'assert',
@@ -189,12 +190,11 @@ class GenericPathResolver:
                 return result
 
     def resolve_from_alias(self, alias, alias_source):
-        path_parts = path.normpath(self.str_path).split(path.sep)
+        path_parts = re.split(r"[/\\]+", self.str_path)
 
         if path_parts[0] == alias:
-            path_parts[0] = alias_source
-
-            return self.resolve_relative_to_dir(path.join(*path_parts), self.current_root)
+            unaliased_path = path.join(alias_source, *path_parts[1:])
+            return self.resolve_relative_to_dir(path.normpath(unaliased_path), self.current_root)
 
     def resolve_with_exts(self, path_name):
         # matching ../index to /index.js
