@@ -13,6 +13,7 @@ NODE_CORE_MODULES = {
     'constants',
     'crypto',
     'dgram',
+    'diagnostics_channel',
     'dns',
     'dns/promises',
     'domain',
@@ -22,6 +23,7 @@ NODE_CORE_MODULES = {
     'http',
     'http2',
     'https',
+    'inspector',
     'module',
     'net',
     'os',
@@ -34,8 +36,10 @@ NODE_CORE_MODULES = {
     'repl',
     'stream',
     'stream/promises',
+    'stream/web',
     'string_decoder',
     'sys',
+    'test',
     'timers',
     'timers/promises',
     'tls',
@@ -49,7 +53,7 @@ NODE_CORE_MODULES = {
     'worker_threads',
     'zlib',
 }
-NODE_CORE_MODULES_TEMPLATE = "https://github.com/nodejs/node/blob/master/lib/{}.js"
+NODE_CORE_MODULES_TEMPLATE = "https://github.com/nodejs/node/blob/main/lib/{}.js"
 
 SASS_CORE_MODULES = {
     'sass:color',
@@ -141,6 +145,8 @@ class GenericPathResolver:
             # Core modules
             if self.str_path in NODE_CORE_MODULES:
                 return NODE_CORE_MODULES_TEMPLATE.format(self.str_path)
+            if self.str_path.startswith('node:'):
+                return NODE_CORE_MODULES_TEMPLATE.format(self.str_path[5:])
 
         if self.scope_is_sass:
             # Core modules
